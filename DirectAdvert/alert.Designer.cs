@@ -45,7 +45,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "В сохраненных данных присутствует \r\nданная запись с другим паролем!";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label1.Visible = false;
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button1
@@ -56,6 +55,7 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "Перезаписать пароль";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -66,6 +66,7 @@
             this.button2.TabIndex = 2;
             this.button2.Text = "Скорректировать данные входа";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // alert
             // 
@@ -93,7 +94,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        public System.Windows.Forms.Button button1;
+        public System.Windows.Forms.Button button2;
     }
 }

@@ -174,6 +174,7 @@
             // 
             // passwordBox
             // 
+            this.passwordBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.passwordBox.Location = new System.Drawing.Point(5, 39);
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.Size = new System.Drawing.Size(160, 20);
@@ -186,9 +187,11 @@
             this.loginBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.loginBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.loginBox.CausesValidation = false;
+            this.loginBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.loginBox.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.loginBox.Location = new System.Drawing.Point(5, 12);
             this.loginBox.Name = "loginBox";
+            this.loginBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.loginBox.Size = new System.Drawing.Size(160, 20);
             this.loginBox.TabIndex = 0;
             this.loginBox.WordWrap = false;
@@ -229,8 +232,6 @@
         private System.Windows.Forms.TabPage Page2;
         private System.Windows.Forms.Panel loginPage;
         private System.Windows.Forms.LinkLabel forgotPasslink;
-        private System.Windows.Forms.TextBox passwordBox;
-        private System.Windows.Forms.TextBox loginBox;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.CheckBox savePasswordchkbx;
         private System.Windows.Forms.Button loginButton;
@@ -239,6 +240,8 @@
         private System.Windows.Forms.PictureBox eyepassbox;
         private System.Windows.Forms.PictureBox flagBox;
         private System.Windows.Forms.ToolTip toolTip1;
+        public System.Windows.Forms.TextBox passwordBox;
+        public System.Windows.Forms.TextBox loginBox;
     }
 }
 

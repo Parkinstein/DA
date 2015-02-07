@@ -16,7 +16,7 @@ namespace DirectAdvert
         {
             InitializeComponent();
         }
-
+        public static bool flag;
         private void alert_Load(object sender, EventArgs e)
         {
 
@@ -25,6 +25,20 @@ namespace DirectAdvert
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            flag = true;
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            flag = false;
+            daForm.login_string = "";
+            daForm.password_string = "";
+            this.Close();
         }
     }
 }
