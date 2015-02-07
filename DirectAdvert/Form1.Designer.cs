@@ -34,18 +34,20 @@
             this.Page1 = new System.Windows.Forms.TabPage();
             this.Page2 = new System.Windows.Forms.TabPage();
             this.loginPage = new System.Windows.Forms.Panel();
-            this.forgotPasslink = new System.Windows.Forms.LinkLabel();
-            this.passwordBox = new System.Windows.Forms.TextBox();
-            this.loginBox = new System.Windows.Forms.TextBox();
+            this.flagBox = new System.Windows.Forms.PictureBox();
+            this.eyepassbox = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
             this.savePasswordchkbx = new System.Windows.Forms.CheckBox();
             this.loginButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.forgotPasslink = new System.Windows.Forms.LinkLabel();
+            this.passwordBox = new System.Windows.Forms.TextBox();
+            this.loginBox = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label2 = new System.Windows.Forms.Label();
-            this.eyepassbox = new System.Windows.Forms.PictureBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             this.loginPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.flagBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eyepassbox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,9 +86,9 @@
             // 
             // loginPage
             // 
+            this.loginPage.Controls.Add(this.flagBox);
             this.loginPage.Controls.Add(this.eyepassbox);
             this.loginPage.Controls.Add(this.label2);
-            this.loginPage.Controls.Add(this.label1);
             this.loginPage.Controls.Add(this.cancelButton);
             this.loginPage.Controls.Add(this.savePasswordchkbx);
             this.loginPage.Controls.Add(this.loginButton);
@@ -98,6 +100,66 @@
             this.loginPage.Name = "loginPage";
             this.loginPage.Size = new System.Drawing.Size(315, 108);
             this.loginPage.TabIndex = 1;
+            // 
+            // flagBox
+            // 
+            this.flagBox.Location = new System.Drawing.Point(135, 69);
+            this.flagBox.Name = "flagBox";
+            this.flagBox.Size = new System.Drawing.Size(30, 30);
+            this.flagBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.flagBox.TabIndex = 12;
+            this.flagBox.TabStop = false;
+            // 
+            // eyepassbox
+            // 
+            this.eyepassbox.Image = global::DirectAdvert.Properties.Resources.eye;
+            this.eyepassbox.Location = new System.Drawing.Point(146, 40);
+            this.eyepassbox.Name = "eyepassbox";
+            this.eyepassbox.Size = new System.Drawing.Size(18, 18);
+            this.eyepassbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.eyepassbox.TabIndex = 11;
+            this.eyepassbox.TabStop = false;
+            this.eyepassbox.MouseLeave += new System.EventHandler(this.eyepassbox_MouseLeave);
+            this.eyepassbox.MouseHover += new System.EventHandler(this.eyepassbox_MouseHover);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(5, 69);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(118, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Текущая раскладка - ";
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelButton.Location = new System.Drawing.Point(180, 38);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(123, 20);
+            this.cancelButton.TabIndex = 3;
+            this.cancelButton.Text = "Выход";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            // 
+            // savePasswordchkbx
+            // 
+            this.savePasswordchkbx.AutoSize = true;
+            this.savePasswordchkbx.Location = new System.Drawing.Point(180, 69);
+            this.savePasswordchkbx.Name = "savePasswordchkbx";
+            this.savePasswordchkbx.Size = new System.Drawing.Size(123, 30);
+            this.savePasswordchkbx.TabIndex = 5;
+            this.savePasswordchkbx.Text = "Сохранить данные \r\nдля входа";
+            this.savePasswordchkbx.UseVisualStyleBackColor = true;
+            // 
+            // loginButton
+            // 
+            this.loginButton.Location = new System.Drawing.Point(180, 12);
+            this.loginButton.Name = "loginButton";
+            this.loginButton.Size = new System.Drawing.Size(123, 20);
+            this.loginButton.TabIndex = 2;
+            this.loginButton.Text = "Вход";
+            this.loginButton.UseVisualStyleBackColor = true;
+            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
             // 
             // forgotPasslink
             // 
@@ -117,81 +179,27 @@
             this.passwordBox.Size = new System.Drawing.Size(160, 20);
             this.passwordBox.TabIndex = 1;
             this.passwordBox.UseSystemPasswordChar = true;
+            this.passwordBox.TextChanged += new System.EventHandler(this.passwordBox_TextChanged);
             // 
             // loginBox
             // 
             this.loginBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.loginBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.loginBox.CausesValidation = false;
+            this.loginBox.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.loginBox.Location = new System.Drawing.Point(5, 12);
             this.loginBox.Name = "loginBox";
             this.loginBox.Size = new System.Drawing.Size(160, 20);
             this.loginBox.TabIndex = 0;
-            // 
-            // cancelButton
-            // 
-            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(180, 38);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(123, 20);
-            this.cancelButton.TabIndex = 3;
-            this.cancelButton.Text = "Выход";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            // 
-            // savePasswordchkbx
-            // 
-            this.savePasswordchkbx.AutoCheck = false;
-            this.savePasswordchkbx.AutoSize = true;
-            this.savePasswordchkbx.Location = new System.Drawing.Point(180, 69);
-            this.savePasswordchkbx.Name = "savePasswordchkbx";
-            this.savePasswordchkbx.Size = new System.Drawing.Size(123, 30);
-            this.savePasswordchkbx.TabIndex = 5;
-            this.savePasswordchkbx.Text = "Сохранить данные \r\nдля входа";
-            this.savePasswordchkbx.UseVisualStyleBackColor = true;
-            // 
-            // loginButton
-            // 
-            this.loginButton.Location = new System.Drawing.Point(180, 12);
-            this.loginButton.Name = "loginButton";
-            this.loginButton.Size = new System.Drawing.Size(123, 20);
-            this.loginButton.TabIndex = 2;
-            this.loginButton.Text = "Вход";
-            this.loginButton.UseVisualStyleBackColor = true;
-            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(130, 69);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 13);
-            this.label1.TabIndex = 9;
+            this.loginBox.WordWrap = false;
+            this.loginBox.TextChanged += new System.EventHandler(this.loginBox_TextChanged);
+            this.loginBox.Leave += new System.EventHandler(this.loginBox_Leave);
             // 
             // timer1
             // 
             this.timer1.Enabled = true;
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 69);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(118, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Текущая раскладка - ";
-            // 
-            // eyepassbox
-            // 
-            this.eyepassbox.Image = global::DirectAdvert.Properties.Resources.eye;
-            this.eyepassbox.Location = new System.Drawing.Point(146, 40);
-            this.eyepassbox.Name = "eyepassbox";
-            this.eyepassbox.Size = new System.Drawing.Size(18, 18);
-            this.eyepassbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.eyepassbox.TabIndex = 11;
-            this.eyepassbox.TabStop = false;
-            this.eyepassbox.MouseLeave += new System.EventHandler(this.eyepassbox_MouseLeave);
-            this.eyepassbox.MouseHover += new System.EventHandler(this.eyepassbox_MouseHover);
             // 
             // daForm
             // 
@@ -208,6 +216,7 @@
             this.tabControl1.ResumeLayout(false);
             this.loginPage.ResumeLayout(false);
             this.loginPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.flagBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eyepassbox)).EndInit();
             this.ResumeLayout(false);
 
@@ -225,10 +234,11 @@
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.CheckBox savePasswordchkbx;
         private System.Windows.Forms.Button loginButton;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox eyepassbox;
+        private System.Windows.Forms.PictureBox flagBox;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

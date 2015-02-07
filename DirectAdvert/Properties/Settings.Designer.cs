@@ -22,13 +22,5 @@ namespace DirectAdvert.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.ListDictionary Input {
-            get {
-                return ((global::System.Collections.Specialized.ListDictionary)(this["Input"]));
-            }
-        }
     }
 }

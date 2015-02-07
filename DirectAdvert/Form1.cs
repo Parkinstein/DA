@@ -5,9 +5,11 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.AccessControl;
 
 namespace DirectAdvert
 {
@@ -18,15 +20,18 @@ namespace DirectAdvert
             InitializeComponent();
 
         }
+        alert alert;
         #region "Variables"
-        public AutoCompleteStringCollection sourceLogin;
+        public AutoCompleteStringCollection colValues = new AutoCompleteStringCollection();
         [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         private static extern IntPtr GetKeyboardLayout(int WindowsThreadProcessID);
         [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         private static extern int GetWindowThreadProcessId(IntPtr handleWindow, out int lpdwProcessID);
         [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
-        public static extern IntPtr GetForegroundWindow();
+        private static extern IntPtr GetForegroundWindow();
         private static InputLanguageCollection _InstalledInputLanguages;
+        public static List<Input> datalog;
+        public List<string> logins;
         private static int _ProcessId;
         private static string _CurrentInputLanguage;
         public string login_string;
@@ -40,13 +45,35 @@ namespace DirectAdvert
         static public string email;
         static public string currency;
         static public bool accses;
+        public string decrypted;
 
         #endregion
         #region "Classes"
-        public class Input : List<string>
+        public class Input : IEquatable<Input>//List<string>
         {
             public string login_in { get; set; }
             public string password_in { get; set; }
+            public int notused { get; set; }
+            public override string ToString()
+            {
+                return "login: " + login_in + "   password: " + password_in;
+            }
+            public override bool Equals(object obj)
+            {
+                if (obj == null) return false;
+                Input objAsPart = obj as Input;
+                if (objAsPart == null) return false;
+                else return Equals(objAsPart);
+            }
+            public override int GetHashCode()
+            {
+                return notused;
+            }
+            public bool Equals(Input other)
+            {
+                if (other == null) return false;
+                return (this.notused.Equals(other.notused));
+            }
         }
         public class RootObject
         {
@@ -99,34 +126,165 @@ namespace DirectAdvert
             tabControl1.SelectTab("Page1");
             tabControl1.Visible = false;
             loginPage.Visible = true;
+            loginButton.Enabled = false;
             eyepassbox.Image = DirectAdvert.Properties.Resources.eye;
-            loginBox.AutoCompleteMode = AutoCompleteMode.Suggest;
+            loginBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             loginBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            Form alert = new alert();
+            #region "Проверка на сохраненные логины-пароли"
             pathFile = (@"common.dll");
+            #region "Есть файл"
             if (File.Exists(pathFile))
             {
                 Console.WriteLine("File founded");
                 fileData = System.IO.File.ReadAllText(pathFile);
+                if (fileData != "")
+                {
+                    try
+                    {
+                        string entropy = null;
+                        string description = "<<<>>>";
+                        decrypted = DPAPI.Decrypt(fileData, entropy, out description);
+                        Console.WriteLine(decrypted + " - decrypted");
+                    }
+                    #region"Ошибка декодирования"
+                    catch (Exception ex)
+                    {
+                        while (ex != null)
+                        {
+                            Console.WriteLine(ex.Message);
+                            ex = ex.InnerException;
+                        }
+                    }
+                    #endregion
+                    datalog = JsonConvert.DeserializeObject<List<Input>>(decrypted)
+                                                              ?? new List<Input>();
+                    logins = new List<string>();
+                    foreach (var stroke in datalog)
+                    {
+                        Console.WriteLine(stroke.login_in.ToString());
+                        logins.Add(stroke.login_in.ToString());
+                    }
+                    colValues.AddRange(logins.ToArray());
+                    loginBox.AutoCompleteCustomSource = colValues;
+                    
+                }
+                else //Пустой файл
+                {
+                    passwordBox.Text = ""; Console.WriteLine("В файле пусто");
+                }
             }
-            else 
+            #endregion
+            #region"Нет файла"
+            else //Нет файла
             {
-                File.WriteAllText(pathFile, fileData);
+                File.WriteAllText(pathFile, ""); Console.WriteLine("Файла не было, создали");
             }
-          
+            #endregion
+            #endregion
         }
+        
 
         private void forgotPasslink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.directadvert.ru/password_reminder");
         }
-
-        private void loginButton_Click(object sender, EventArgs e)
+        private void loginBox_TextChanged(object sender, EventArgs e)
         {
-            if (savePasswordchkbx.Checked == true) 
-            { 
-            
+            login_string = loginBox.Text;
+            RegexUtilities util = new RegexUtilities();
+            if (util.IsValidEmail(loginBox.Text))
+            {
+                loginBox.BackColor = Color.Green;
+                loginBox.ForeColor = Color.White;
+            }
+            else
+            {
+                loginBox.BackColor = Color.Red;
+                loginBox.ForeColor = Color.White;
+            }
+            if (loginBox.Text.Length > 2 && datalog != null)
+            {
+                int i = datalog.FindIndex(s => s.login_in == loginBox.Text);
+                Console.WriteLine(i);
+                string newitem;
+                
+                if (i >= 0)
+                {
+                    newitem = datalog.ElementAt(i).password_in.ToString();
+                    passwordBox.Text = newitem;
+                    for (int x = 0; x > datalog.Count; x++)
+                    {
+                        Console.WriteLine(datalog.ElementAt(x).login_in.ToString());
+                        Console.WriteLine(datalog.ElementAt(x).password_in.ToString());
+                    }
+                }
+                else { passwordBox.Text = ""; Console.WriteLine("Совпадений не найдено"); }
             }
         }
+        private void passwordBox_TextChanged(object sender, EventArgs e)
+        {
+            password_string = passwordBox.Text;
+            RegexUtilities util = new RegexUtilities();
+            if (util.IsValidEmail(loginBox.Text)&&passwordBox.Text.Length >= 6)
+                loginButton.Enabled = true;
+        }
+        private void loginButton_Click(object sender, EventArgs e)
+        {
+            if (savePasswordchkbx.Checked == true)
+            {
+                if (decrypted != null)
+                {
+                    datalog = JsonConvert.DeserializeObject<List<Input>>(decrypted) ?? new List<Input>();
+                    if (datalog.Exists(x => x.login_in == loginBox.Text && datalog.Exists(y => y.password_in != passwordBox.Text)))
+                    {
+                        alert.Show(Form.ActiveForm);
+                        //int a = datalog.FindIndex(s => s.login_in == loginBox.Text);
+                        //datalog.RemoveAt(a);
+                        //datalog.Add(new Input() { login_in = login_string, password_in = password_string }); decrypted = JsonConvert.SerializeObject(datalog);
+                        //string entropy = null;
+                        //string encrypted = DPAPI.Encrypt(DPAPI.KeyType.UserKey, decrypted, entropy);
+                        //File.WriteAllText(pathFile, encrypted);
+                    
+                    }
+                    if (datalog.Exists(x => x.login_in == loginBox.Text && datalog.Exists(y => y.password_in == passwordBox.Text)))
+                    { Console.WriteLine("Запись уже существует"); }
+                    else
+                    {
+                        datalog.Add(new Input() { login_in = login_string, password_in = password_string }); decrypted = JsonConvert.SerializeObject(datalog);
+                        string entropy = null;
+                        string encrypted = DPAPI.Encrypt(DPAPI.KeyType.UserKey, decrypted, entropy);
+                        File.WriteAllText(pathFile, encrypted);
+                    }
+                }
+                else
+                {
+                    datalog = new List<Input>(); // JsonConvert.DeserializeObject<List<Input>>(decrypted) ?? 
+                    datalog.Add(new Input() { login_in = login_string, password_in = password_string }); decrypted = JsonConvert.SerializeObject(datalog);
+                    string entropy = null;
+                    string encrypted = DPAPI.Encrypt(DPAPI.KeyType.UserKey, decrypted, entropy);
+                    File.WriteAllText(pathFile, encrypted);
+                    
+                }
+            }
+            else 
+            {
+                if (decrypted != null)
+                {
+                    datalog = JsonConvert.DeserializeObject<List<Input>>(decrypted) ?? new List<Input>();
+                    if (datalog.Exists(x => x.login_in == loginBox.Text))
+                    { Console.WriteLine("Запись уже существует"); }
+                    else
+                    {
+                        datalog.Add(new Input() { login_in = login_string, password_in = null }); decrypted = JsonConvert.SerializeObject(datalog);
+                        string entropy = null;
+                        string encrypted = DPAPI.Encrypt(DPAPI.KeyType.UserKey, decrypted, entropy);
+                        File.WriteAllText(pathFile, encrypted);
+                    }
+                }
+            }
+        }
+
         private static string GetKeyboardLayoutId()
         {
  
@@ -145,7 +303,11 @@ namespace DirectAdvert
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            label1.Text = GetKeyboardLayoutId();
+            if (GetKeyboardLayoutId() == "ENU")
+                flagBox.Image = DirectAdvert.Properties.Resources.reino_unido;
+            if (GetKeyboardLayoutId() == "RUS")
+                flagBox.Image = DirectAdvert.Properties.Resources.russia;
+    
         }
 
         private void eyepassbox_MouseHover(object sender, EventArgs e)
@@ -159,8 +321,24 @@ namespace DirectAdvert
         {
             eyepassbox.Image = DirectAdvert.Properties.Resources.eye;
             passwordBox.UseSystemPasswordChar = true;
+            
 
         }
+
+        private void loginBox_Leave(object sender, EventArgs e)
+        {
+            RegexUtilities util = new RegexUtilities();
+            if (util.IsValidEmail(loginBox.Text))
+                Console.WriteLine("Введен email");
+            else
+                //toolTip1.SetToolTip(loginBox, "...");
+            toolTip1.Show("Проверьте правильность ввода логина",loginBox,3000);
+                Console.WriteLine("Ни фига не Email");
+        }
+
+
+
+
 
     }
 }
