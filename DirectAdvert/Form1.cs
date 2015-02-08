@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,6 @@ namespace DirectAdvert
         public daForm()
         {
             InitializeComponent();
-
         }
         
         #region "Variables"
@@ -40,15 +40,21 @@ namespace DirectAdvert
         public string fileData;
         static public string tokenvalue;
         static public string errorvalue;
-        static public string errorcode;
+        static public int errorcode;
         static public string balance;
         static public string email;
         static public string currency;
         static public bool accses;
         public string decrypted;
+        public int folderid;
+        public RootObject userdataX;
+        public RootObject userdataY;
+        public static object datasrc;
+
 
         #endregion
         #region "Classes"
+        
         public class Input : IEquatable<Input>
         {
             public string login_in { get; set; }
@@ -123,10 +129,15 @@ namespace DirectAdvert
         #endregion
         private void Form1_Load(object sender, EventArgs e)
         {
+            
             tabControl1.SelectTab("Page1");
             tabControl1.Visible = false;
+            pictureBox4.Visible = false;
+            this.ClientSize = new System.Drawing.Size(307, 112); 
             loginPage.Visible = true;
             loginButton.Enabled = false;
+            pictureBox1.Visible = false;
+            label11.Visible = false;
             eyepassbox.Image = DirectAdvert.Properties.Resources.eye;
             loginBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             loginBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -223,6 +234,7 @@ namespace DirectAdvert
         private void passwordBox_TextChanged(object sender, EventArgs e)
         {
             password_string = passwordBox.Text;
+            if (GetKeyboardLayoutId() == "RUS") { toolTip1.Show("Включена русская раскладка, пароль может быть введен неверно", passwordBox, 3000); }
             RegexUtilities util = new RegexUtilities();
             if (util.IsValidEmail(loginBox.Text)&&passwordBox.Text.Length >= 6)
                 loginButton.Enabled = true;
@@ -237,23 +249,34 @@ namespace DirectAdvert
                     if (datalog.Exists(x => x.login_in == loginBox.Text && datalog.Exists(y => y.password_in != passwordBox.Text)))
                     {
                         alert frm = new alert();
-                        frm.Show();
-                        //int a = datalog.FindIndex(s => s.login_in == loginBox.Text);
-                        //datalog.RemoveAt(a);
-                        //datalog.Add(new Input() { login_in = login_string, password_in = password_string }); decrypted = JsonConvert.SerializeObject(datalog);
-                        //string entropy = null;
-                        //string encrypted = DPAPI.Encrypt(DPAPI.KeyType.UserKey, decrypted, entropy);
-                        //File.WriteAllText(pathFile, encrypted);
-                    
+                        if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            int a = datalog.FindIndex(s => s.login_in == loginBox.Text);
+                            datalog.RemoveAt(a);
+                            datalog.Add(new Input() { login_in = login_string, password_in = password_string }); decrypted = JsonConvert.SerializeObject(datalog);
+                            string entropy = null;
+                            string encrypted = DPAPI.Encrypt(DPAPI.KeyType.UserKey, decrypted, entropy);
+                            File.WriteAllText(pathFile, encrypted);
+                            frm.label1.Text = "Данные были перезаписаны";
+                            querytoken();
+                        }
+                        if (frm.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+                        {
+                            login_string = "";
+                            password_string = "";
+                        }
+
                     }
-                    if (datalog.Exists(x => x.login_in == loginBox.Text && datalog.Exists(y => y.password_in == passwordBox.Text)))
-                    { Console.WriteLine("Запись уже существует"); }
+                    else if (datalog.Exists(x => x.login_in == loginBox.Text && datalog.Exists(y => y.password_in == passwordBox.Text)))
+                    { Console.WriteLine("Запись уже существует"); querytoken(); }
+                    
                     else
                     {
                         datalog.Add(new Input() { login_in = login_string, password_in = password_string }); decrypted = JsonConvert.SerializeObject(datalog);
                         string entropy = null;
                         string encrypted = DPAPI.Encrypt(DPAPI.KeyType.UserKey, decrypted, entropy);
                         File.WriteAllText(pathFile, encrypted);
+                        querytoken();
                     }
                 }
                 else
@@ -263,6 +286,7 @@ namespace DirectAdvert
                     string entropy = null;
                     string encrypted = DPAPI.Encrypt(DPAPI.KeyType.UserKey, decrypted, entropy);
                     File.WriteAllText(pathFile, encrypted);
+                    querytoken();
                     
                 }
             }
@@ -272,13 +296,14 @@ namespace DirectAdvert
                 {
                     datalog = JsonConvert.DeserializeObject<List<Input>>(decrypted) ?? new List<Input>();
                     if (datalog.Exists(x => x.login_in == loginBox.Text))
-                    { Console.WriteLine("Запись уже существует"); }
+                    { Console.WriteLine("Запись уже существует"); querytoken(); }
                     else
                     {
                         datalog.Add(new Input() { login_in = login_string, password_in = "" }); decrypted = JsonConvert.SerializeObject(datalog);
                         string entropy = null;
                         string encrypted = DPAPI.Encrypt(DPAPI.KeyType.UserKey, decrypted, entropy);
                         File.WriteAllText(pathFile, encrypted);
+                        querytoken();
                     }
                 }
             }
@@ -330,15 +355,132 @@ namespace DirectAdvert
             if (util.IsValidEmail(loginBox.Text))
                 Console.WriteLine("Введен email");
             else
-                //toolTip1.SetToolTip(loginBox, "...");
-            toolTip1.Show("Проверьте правильность ввода логина",loginBox,3000);
+            {
+                toolTip1.Show("Проверьте правильность ввода логина", loginBox, 3000);
                 Console.WriteLine("Ни фига не Email");
+            }
+        }
+        public void querytoken()
+        {
+            WebClient client = new WebClient();
+            string address = ("https://api.directadvert.ru/auth.json?name=" + login_string + "&password=" + password_string);
+            string reply = client.DownloadString(address);
+            RootObject userdata = new RootObject();
+            userdata = JsonConvert.DeserializeObject<RootObject>(reply);
+            if (userdata.success == true) 
+            {
+                Console.WriteLine("отработала querytoken ");
+                tokenvalue = userdata.token;
+                currency = userdata.account_data.currency;
+                if (currency == "RUR") { pictureBox1.Visible = true; pictureBox1.Image = DirectAdvert.Properties.Resources.russia; }
+                label7.Text = userdata.account_data.email;
+                int i = userdata.account_data.balance.IndexOf(".");
+                string balanseRounded_pre = userdata.account_data.balance;
+                string balanseRounded = balanseRounded_pre.Remove(i + 3);
+                label8.Text = balanseRounded;
+                this.ClientSize = new System.Drawing.Size(800, 600);
+                loginPage.Visible = false;
+                tabControl1.Visible = true;
+                queryfolders();
+            }
+            else if (userdata.error_code == 1010) { MessageBox.Show(userdata.error_message.Replace("&nbsp;"," ")); }
+        }
+        public void queryfolders()
+        {
+            WebClient client = new WebClient();
+            string address = ("https://api.directadvert.ru/get_account_details.json"+"?token="+tokenvalue);
+            string reply = client.DownloadString(address);
+            userdataX = JsonConvert.DeserializeObject<RootObject>(reply);
+            if (userdataX.success == true)
+            {
+                Console.WriteLine("отработала queryfolders ");
+                folderList.DataSource = userdataX.account_details;
+                folderList.DisplayMember = "title";
+                folderList.ValueMember = "group_id";
+                folderid = Convert.ToInt32(folderList.SelectedValue);
+                dataGridView2.DataSource = userdataX.account_details;
+                double allcounts = 0;
+                for (int index = 0; index <= userdataX.account_details.Count - 1; index++)
+                {
+                    if (dataGridView2.Rows[index].Cells["all_count"].Value != null)
+                    {
+                        allcounts += Convert.ToDouble(dataGridView2["all_count", index].Value);
+                        label9.Text = allcounts.ToString();
+                    }
+                }
+                double activecounts = 0;
+                for (int index = 0; index <= userdataX.account_details.Count - 1; index++)
+                {
+                    if (dataGridView2.Rows[index].Cells["active_count"].Value != null)
+                    {
+                        activecounts += Convert.ToDouble(dataGridView2["active_count", index].Value);
+                        label10.Text = activecounts.ToString();
+                    }
+                }
+                
+                queryteasers();
+            }
+            //else if (userdata.error_code == 1016) { Console.WriteLine("1016"); }
+        }
+        public void queryteasers()
+        {
+
+            WebClient client = new WebClient();
+            string address = ("https://api.directadvert.ru/get_group_teasers.json" + "?token=" + tokenvalue + "&group_id=" + folderid);
+            string reply = client.DownloadString(address);
+             userdataY = JsonConvert.DeserializeObject<RootObject>(reply);
+            if (userdataY.success == true)
+            {
+                Console.WriteLine("отработала queryteasers ");
+                dataGridView1.DataSource = userdataY.group_teasers;
+                label11.Visible = false;
+                dataGridView1.Visible = true;
+                dataGridView1.RowHeadersVisible = false;
+                dataGridView1.Columns[0].HeaderText = "ID объявления";
+                dataGridView1.Columns[1].HeaderText = "ID группы";
+                dataGridView1.Columns[2].HeaderText = "Статус";
+                dataGridView1.Columns[3].HeaderText = "Название тизера";
+                dataGridView1.Columns[4].HeaderText = "Текст";
+                dataGridView1.Columns[5].Visible = false;
+                dataGridView1.Columns[6].HeaderText = "URL";
+                dataGridView1.Columns[7].Visible = false;
+                dataGridView1.Columns[8].Visible = false;
+                dataGridView1.Columns[9].Visible = false;
+                dataGridView1.Columns[10].HeaderText = "Цена";
+                dataGridView1.Columns[11].Visible = false;
+                dataGridView1.Columns[12].Visible = false;
+                dataGridView1.Columns[13].Visible = false;
+                dataGridView1.AutoResizeColumns();
+                dataGridView1.AutoResizeRows();
+                dataGridView1.Columns[10].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                //dataGridView1.AutoSize = true;
+                
+            }
+            else if (userdataY.error_code == 1016) { label11.Visible = true; }
         }
 
 
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
 
-
-
+        private void folderList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            folderList.DataSource = userdataX.account_details;
+            folderList.DisplayMember = "title";
+            folderList.ValueMember = "group_id";
+            folderid = Convert.ToInt32(folderList.SelectedValue);
+            folderList.DisplayMember = "title";
+            folderList.ValueMember = "status";
+            //Console.WriteLine(folderid.ToString());
+            if (folderList.SelectedValue.ToString() == "paused")
+            { pictureBox2.Image = DirectAdvert.Properties.Resources.pause_blue; }
+            if (folderList.SelectedValue.ToString() == "active")
+            { pictureBox2.Image = DirectAdvert.Properties.Resources.play_blue; }
+            queryteasers();
+         }
+ 
     }
 }
         

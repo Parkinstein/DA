@@ -27,17 +27,16 @@ namespace DirectAdvert
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
             flag = true;
             this.Close();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        public void button2_Click(object sender, EventArgs e)
         {
             flag = false;
-            daForm.login_string = "";
-            daForm.password_string = "";
+            
             this.Close();
         }
     }
