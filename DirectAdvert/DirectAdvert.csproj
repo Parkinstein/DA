@@ -153,6 +153,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo_da.ico" />
+    <None Include="Resources\arr_up.png" />
+    <None Include="Resources\Minus.png" />
+    <None Include="Resources\arr_dn.png" />
+    <None Include="Resources\Add.png" />
     <None Include="Resources\loadinfo_wb.gif" />
     <None Include="Resources\loadinfo1.gif" />
     <None Include="Resources\loadinfo.gif" />

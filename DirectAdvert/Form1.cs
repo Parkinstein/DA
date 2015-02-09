@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.AccessControl;
@@ -49,10 +50,14 @@ namespace DirectAdvert
         public int folderid;
         public RootObject userdataX;
         public RootObject userdataY;
+        public RootObject userdataZ;
         public static object datasrc;
         public bool flag_create_NF;
         public int start_pos;
         public StringBuilder ads_array;
+        public bool groupstatus;
+        public string current_title;
+        public string new_FolderName;
 
 
         #endregion
@@ -93,6 +98,7 @@ namespace DirectAdvert
             public bool success { get; set; }
             public int error_code { get; set; }
             public string error_message { get; set; }
+            public int id { get; set; }
         }
         public class AccountData
         {
@@ -468,19 +474,66 @@ namespace DirectAdvert
         public void group_add()
         {
             WebClient client = new WebClient();
-            string new_FolderName = new_group_name.Text;
-            string new_folder = "&name=" + new_FolderName;
-            string address = ("https://api.directadvert.ru/create_ad_group.json?token=" + tokenvalue  + "&password=" + password_string);
+            new_FolderName = new_group_name.Text;
+            string new_folder = "&name=" + Uri.EscapeDataString(new_FolderName);
+            string address = ("https://api.directadvert.ru/create_ad_group.json?token=" + tokenvalue  + new_folder);
+            string reply = client.DownloadString(address);
+            RootObject userdataZ = new RootObject();
+            userdataZ = JsonConvert.DeserializeObject<RootObject>(reply);
+            if (userdataZ.success == true)
+            {
+
+                folderid = userdataZ.id;
+                group_pause();
+                queryfolders();
+                folderList.Refresh();
+                int a = folderList.FindString(new_FolderName);
+                folderList.SelectedIndex = a;
+                
+                Console.WriteLine("отработала group_add ");
+
+            }
+            else if (userdataZ.error_code == 1010) { MessageBox.Show(userdataZ.error_message.Replace("&nbsp;", " ")); }
+        }
+        public void group_pause()
+        {
+            WebClient client = new WebClient();
+            string address = ("https://api.directadvert.ru/set_groups_status.json?token=" + tokenvalue + "&groups_id[]=" + folderid.ToString() + "&status=paused");
             string reply = client.DownloadString(address);
             RootObject userdata = new RootObject();
             userdata = JsonConvert.DeserializeObject<RootObject>(reply);
             if (userdata.success == true)
             {
-                Console.WriteLine("отработала group_add ");
-                
-                queryfolders();
+                Console.WriteLine("отработала pause group ");
             }
             else if (userdata.error_code == 1010) { MessageBox.Show(userdata.error_message.Replace("&nbsp;", " ")); }
+        }
+        public void group_start()
+        {
+            WebClient client = new WebClient();
+            string address = ("https://api.directadvert.ru/set_groups_status.json?token=" + tokenvalue + "&groups_id[]=" + folderid.ToString() + "&status=active");
+            
+            string reply = client.DownloadString(address);
+            RootObject userdata = new RootObject();
+            userdata = JsonConvert.DeserializeObject<RootObject>(reply);
+            if (userdata.success == true)
+            {
+                int group_to_set = folderid;
+
+                Console.WriteLine("отработала active group "+Environment.NewLine + group_to_set.ToString());
+            }
+        }
+        public void group_delete()
+        {
+            WebClient client = new WebClient();
+            string address = ("https://api.directadvert.ru/delete_ad_group.json?token=" + tokenvalue + "&ids[]=" + folderid.ToString());
+            string reply = client.DownloadString(address);
+            RootObject userdata = new RootObject();
+            userdata = JsonConvert.DeserializeObject<RootObject>(reply);
+            if (userdata.success == true)
+            {
+                Console.WriteLine("отработала delete group ");
+            }
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -493,14 +546,17 @@ namespace DirectAdvert
             folderList.DataSource = userdataX.account_details;
             folderList.DisplayMember = "title";
             folderList.ValueMember = "group_id";
+            current_title = folderList.DisplayMember.ToString();
             folderid = Convert.ToInt32(folderList.SelectedValue);
             folderList.DisplayMember = "title";
             folderList.ValueMember = "status";
-            //Console.WriteLine(folderid.ToString());
-            if (folderList.SelectedValue.ToString() == "paused")
-            { pictureBox2.Image = DirectAdvert.Properties.Resources.pause_blue; }
-            if (folderList.SelectedValue.ToString() == "active")
-            { pictureBox2.Image = DirectAdvert.Properties.Resources.play_blue; }
+            if (folderList.SelectedValue != null)
+            {
+                if (folderList.SelectedValue.ToString() == "paused")
+                { pictureBox2.Image = DirectAdvert.Properties.Resources.pause_blue; groupstatus = false; }
+                if (folderList.SelectedValue.ToString() == "active")
+                { pictureBox2.Image = DirectAdvert.Properties.Resources.play_blue; groupstatus = true; }
+            }
             queryteasers();
 
          }
@@ -535,15 +591,16 @@ namespace DirectAdvert
         {
             if (flag_create_NF == true)
             {
-                if (start_pos >= 134) timer_animation_panel.Stop();
-                else start_pos += 3;
+                if (start_pos >= 134) { timer_animation_panel.Stop(); button2.Image = DirectAdvert.Properties.Resources.arr_up; }
+
+                else start_pos += 5;
                 panel3.Location = new Point(163, start_pos);
 
             }
             else 
             {
-                if (start_pos <= 17) timer_animation_panel.Stop();
-                else start_pos -= 3;
+                if (start_pos <= 17) { timer_animation_panel.Stop(); button2.Image = DirectAdvert.Properties.Resources.arr_dn; }
+                else start_pos -= 5;
                 panel3.Location = new Point(163, start_pos);
 
             }
@@ -556,9 +613,47 @@ namespace DirectAdvert
             {
                 flag_create_NF = false;
                 timer_animation_panel.Start();
+                group_add();
+                label18.Visible = true;
+                label19.Text = new_FolderName;
+                label19.Visible = true;
+                Thread.Sleep(2000);
+                label18.Visible = false;
+                label19.Visible = false;
             }
         }
- 
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            if (groupstatus == false)
+            {
+                group_start(); //queryfolders(); 
+                int a = folderList.FindString(current_title);
+                folderList.SelectedIndex = a;
+                Console.WriteLine(folderid.ToString());
+                queryfolders();
+                folderList.SelectedIndex = a;
+                Console.WriteLine(folderid.ToString());
+            }
+            if (groupstatus == true)
+            {
+                group_pause(); //queryfolders();
+                int a = folderList.FindString(current_title);
+                Console.WriteLine(folderid.ToString() + " 1  " + a.ToString());
+                queryfolders();
+                Console.WriteLine(folderid.ToString() + " 2  " + a.ToString());
+                folderList.SelectedIndex = a;
+                Console.WriteLine(folderid.ToString() + " 3  " + a.ToString());
+                
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)///delete group
+        {
+            group_delete();
+            queryfolders();
+            folderList.Refresh();
+        }
     }
 }
         
