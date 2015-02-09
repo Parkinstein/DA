@@ -50,6 +50,9 @@ namespace DirectAdvert
         public RootObject userdataX;
         public RootObject userdataY;
         public static object datasrc;
+        public bool flag_create_NF;
+        public int start_pos;
+        public StringBuilder ads_array;
 
 
         #endregion
@@ -131,8 +134,10 @@ namespace DirectAdvert
         {
             
             tabControl1.SelectTab("Page1");
+            start_pos = 17;
             tabControl1.Visible = false;
-            pictureBox4.Visible = false;
+            listBox1.Items.Clear();
+            flag_create_NF = false;
             this.ClientSize = new System.Drawing.Size(307, 112); 
             loginPage.Visible = true;
             loginButton.Enabled = false;
@@ -424,7 +429,7 @@ namespace DirectAdvert
         }
         public void queryteasers()
         {
-
+            this.Text = "Идет получение данных...";
             WebClient client = new WebClient();
             string address = ("https://api.directadvert.ru/get_group_teasers.json" + "?token=" + tokenvalue + "&group_id=" + folderid);
             string reply = client.DownloadString(address);
@@ -457,8 +462,26 @@ namespace DirectAdvert
                 
             }
             else if (userdataY.error_code == 1016) { label11.Visible = true; }
+            this.Text = "Direct/Advert";
         }
 
+        public void group_add()
+        {
+            WebClient client = new WebClient();
+            string new_FolderName = new_group_name.Text;
+            string new_folder = "&name=" + new_FolderName;
+            string address = ("https://api.directadvert.ru/create_ad_group.json?token=" + tokenvalue  + "&password=" + password_string);
+            string reply = client.DownloadString(address);
+            RootObject userdata = new RootObject();
+            userdata = JsonConvert.DeserializeObject<RootObject>(reply);
+            if (userdata.success == true)
+            {
+                Console.WriteLine("отработала group_add ");
+                
+                queryfolders();
+            }
+            else if (userdata.error_code == 1010) { MessageBox.Show(userdata.error_message.Replace("&nbsp;", " ")); }
+        }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
@@ -479,7 +502,62 @@ namespace DirectAdvert
             if (folderList.SelectedValue.ToString() == "active")
             { pictureBox2.Image = DirectAdvert.Properties.Resources.play_blue; }
             queryteasers();
+
          }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            byte[] imagebytes = Convert.FromBase64String((string)dataGridView1.CurrentRow.Cells[8].Value);
+            MemoryStream ms = new MemoryStream(imagebytes, 0, imagebytes.Length);
+            ms.Write(imagebytes, 0, imagebytes.Length);
+            pictureBox3.Image = Image.FromStream(ms, true);
+            teaserHead.Text = (string)dataGridView1.CurrentRow.Cells[3].Value;
+            teaserDescript.Text = (string)dataGridView1.CurrentRow.Cells[4].Value;
+            priceText.Text = ((double)dataGridView1.CurrentRow.Cells[10].Value).ToString();
+            urlText.Text = (string)dataGridView1.CurrentRow.Cells[6].Value;
+            statusBox.Text = (string)dataGridView1.CurrentRow.Cells[2].Value;
+         }
+            
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if( flag_create_NF == false)
+            {
+                flag_create_NF = true; 
+                timer_animation_panel.Start();
+            }
+            else if (flag_create_NF == true)
+            { flag_create_NF = false; 
+                timer_animation_panel.Start(); }
+        }
+
+        private void timer_animation_panel_Tick(object sender, EventArgs e)
+        {
+            if (flag_create_NF == true)
+            {
+                if (start_pos >= 134) timer_animation_panel.Stop();
+                else start_pos += 3;
+                panel3.Location = new Point(163, start_pos);
+
+            }
+            else 
+            {
+                if (start_pos <= 17) timer_animation_panel.Stop();
+                else start_pos -= 3;
+                panel3.Location = new Point(163, start_pos);
+
+            }
+
+        }
+
+        private void button3_Click(object sender, EventArgs e) //create new group
+        {
+            if (flag_create_NF == true)
+            {
+                flag_create_NF = false;
+                timer_animation_panel.Start();
+            }
+        }
  
     }
 }
