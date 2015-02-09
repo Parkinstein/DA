@@ -32,9 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(daForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Page1 = new System.Windows.Forms.TabPage();
-            this.label19 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.label18 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -59,7 +58,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.folderList = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -74,6 +72,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
             this.new_group_name = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.Page2 = new System.Windows.Forms.TabPage();
             this.loginPage = new System.Windows.Forms.Panel();
             this.flagBox = new System.Windows.Forms.PictureBox();
@@ -114,14 +113,13 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.ShowToolTips = true;
             this.tabControl1.Size = new System.Drawing.Size(800, 600);
-            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl1.TabIndex = 0;
             // 
             // Page1
             // 
-            this.Page1.Controls.Add(this.label19);
-            this.Page1.Controls.Add(this.listBox1);
-            this.Page1.Controls.Add(this.label18);
+            this.Page1.Controls.Add(this.button6);
+            this.Page1.Controls.Add(this.comboBox1);
             this.Page1.Controls.Add(this.button2);
             this.Page1.Controls.Add(this.button1);
             this.Page1.Controls.Add(this.panel1);
@@ -133,11 +131,11 @@
             this.Page1.Controls.Add(this.dataUser);
             this.Page1.Controls.Add(this.label1);
             this.Page1.Controls.Add(this.folderList);
-            this.Page1.Controls.Add(this.label11);
             this.Page1.Controls.Add(this.panel4);
+            this.Page1.Controls.Add(this.panel3);
+            this.Page1.Controls.Add(this.label11);
             this.Page1.Controls.Add(this.dataGridView1);
             this.Page1.Controls.Add(this.panel2);
-            this.Page1.Controls.Add(this.panel3);
             this.Page1.Location = new System.Drawing.Point(4, 22);
             this.Page1.Name = "Page1";
             this.Page1.Padding = new System.Windows.Forms.Padding(3);
@@ -147,34 +145,23 @@
             this.Page1.ToolTipText = "Управление тизерами";
             this.Page1.UseVisualStyleBackColor = true;
             // 
-            // label19
+            // button6
             // 
-            this.label19.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(163, 187);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(166, 48);
-            this.label19.TabIndex = 66;
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label19.Visible = false;
+            this.button6.Location = new System.Drawing.Point(651, 143);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 65;
+            this.button6.Text = "button6";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // listBox1
+            // comboBox1
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(696, 16);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(88, 17);
-            this.listBox1.TabIndex = 65;
-            // 
-            // label18
-            // 
-            this.label18.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(163, 138);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(166, 48);
-            this.label18.TabIndex = 64;
-            this.label18.Text = "Создана новая группа:";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label18.Visible = false;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(651, 4);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 64;
             // 
             // button2
             // 
@@ -190,7 +177,7 @@
             // 
             // button1
             // 
-            this.button1.Image = global::DirectAdvert.Properties.Resources.Minus;
+            this.button1.Image = global::DirectAdvert.Properties.Resources.Remove;
             this.button1.Location = new System.Drawing.Point(163, 54);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(166, 39);
@@ -217,7 +204,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 38);
+            this.label4.Location = new System.Drawing.Point(2, 44);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 55;
@@ -227,7 +214,7 @@
             // statusBox
             // 
             this.statusBox.AutoSize = true;
-            this.statusBox.Location = new System.Drawing.Point(45, 62);
+            this.statusBox.Location = new System.Drawing.Point(45, 80);
             this.statusBox.Name = "statusBox";
             this.statusBox.Size = new System.Drawing.Size(35, 13);
             this.statusBox.TabIndex = 58;
@@ -237,7 +224,7 @@
             // priceText
             // 
             this.priceText.AutoSize = true;
-            this.priceText.Location = new System.Drawing.Point(45, 14);
+            this.priceText.Location = new System.Drawing.Point(44, 8);
             this.priceText.Name = "priceText";
             this.priceText.Size = new System.Drawing.Size(30, 13);
             this.priceText.TabIndex = 53;
@@ -247,7 +234,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(2, 62);
+            this.label16.Location = new System.Drawing.Point(2, 80);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(44, 13);
             this.label16.TabIndex = 57;
@@ -257,7 +244,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 14);
+            this.label3.Location = new System.Drawing.Point(2, 8);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(36, 13);
             this.label3.TabIndex = 54;
@@ -267,7 +254,7 @@
             // urlText
             // 
             this.urlText.AutoSize = true;
-            this.urlText.Location = new System.Drawing.Point(45, 38);
+            this.urlText.Location = new System.Drawing.Point(45, 44);
             this.urlText.Name = "urlText";
             this.urlText.Size = new System.Drawing.Size(18, 13);
             this.urlText.TabIndex = 56;
@@ -424,18 +411,6 @@
             this.folderList.TabIndex = 0;
             this.folderList.SelectedIndexChanged += new System.EventHandler(this.folderList_SelectedIndexChanged);
             // 
-            // label11
-            // 
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label11.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label11.Location = new System.Drawing.Point(3, 252);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(786, 265);
-            this.label11.TabIndex = 47;
-            this.label11.Text = "ВЫБРАННАЯ\r\nГРУППА ПУСТА";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label11.Visible = false;
-            // 
             // panel4
             // 
             this.panel4.Location = new System.Drawing.Point(163, 17);
@@ -458,6 +433,7 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(786, 265);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // panel2
@@ -574,6 +550,18 @@
             this.new_group_name.Name = "new_group_name";
             this.new_group_name.Size = new System.Drawing.Size(144, 20);
             this.new_group_name.TabIndex = 0;
+            // 
+            // label11
+            // 
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label11.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label11.Location = new System.Drawing.Point(3, 252);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(786, 265);
+            this.label11.TabIndex = 47;
+            this.label11.Text = "ВЫБРАННАЯ\r\nГРУППА ПУСТА";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label11.Visible = false;
             // 
             // Page2
             // 
@@ -805,9 +793,8 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox new_group_name;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button button6;
     }
 }
 

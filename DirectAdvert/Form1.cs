@@ -58,6 +58,8 @@ namespace DirectAdvert
         public bool groupstatus;
         public string current_title;
         public string new_FolderName;
+        public List<string> teasers_to_del;
+        public int zas;
 
 
         #endregion
@@ -142,7 +144,8 @@ namespace DirectAdvert
             tabControl1.SelectTab("Page1");
             start_pos = 17;
             tabControl1.Visible = false;
-            listBox1.Items.Clear();
+            teasers_to_del = new List<string>();
+            comboBox1.Items.Clear();
             flag_create_NF = false;
             this.ClientSize = new System.Drawing.Size(307, 112); 
             loginPage.Visible = true;
@@ -504,9 +507,10 @@ namespace DirectAdvert
             userdata = JsonConvert.DeserializeObject<RootObject>(reply);
             if (userdata.success == true)
             {
-                Console.WriteLine("отработала pause group ");
+                pictureBox2.Image = DirectAdvert.Properties.Resources.pause_blue;
+                Console.WriteLine("Группа встала на паузу");
+                queryfolders();
             }
-            else if (userdata.error_code == 1010) { MessageBox.Show(userdata.error_message.Replace("&nbsp;", " ")); }
         }
         public void group_start()
         {
@@ -518,9 +522,9 @@ namespace DirectAdvert
             userdata = JsonConvert.DeserializeObject<RootObject>(reply);
             if (userdata.success == true)
             {
-                int group_to_set = folderid;
-
-                Console.WriteLine("отработала active group "+Environment.NewLine + group_to_set.ToString());
+                pictureBox2.Image = DirectAdvert.Properties.Resources.play_blue;
+                Console.WriteLine("Группа стартовала");
+                queryfolders();
             }
         }
         public void group_delete()
@@ -532,7 +536,7 @@ namespace DirectAdvert
             userdata = JsonConvert.DeserializeObject<RootObject>(reply);
             if (userdata.success == true)
             {
-                Console.WriteLine("отработала delete group ");
+                pictureBox2.Image = DirectAdvert.Properties.Resources.pause_blue;
             }
         }
 
@@ -546,7 +550,6 @@ namespace DirectAdvert
             folderList.DataSource = userdataX.account_details;
             folderList.DisplayMember = "title";
             folderList.ValueMember = "group_id";
-            current_title = folderList.DisplayMember.ToString();
             folderid = Convert.ToInt32(folderList.SelectedValue);
             folderList.DisplayMember = "title";
             folderList.ValueMember = "status";
@@ -557,6 +560,7 @@ namespace DirectAdvert
                 if (folderList.SelectedValue.ToString() == "active")
                 { pictureBox2.Image = DirectAdvert.Properties.Resources.play_blue; groupstatus = true; }
             }
+
             queryteasers();
 
          }
@@ -572,8 +576,9 @@ namespace DirectAdvert
             priceText.Text = ((double)dataGridView1.CurrentRow.Cells[10].Value).ToString();
             urlText.Text = (string)dataGridView1.CurrentRow.Cells[6].Value;
             statusBox.Text = (string)dataGridView1.CurrentRow.Cells[2].Value;
-         }
             
+            
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -614,38 +619,30 @@ namespace DirectAdvert
                 flag_create_NF = false;
                 timer_animation_panel.Start();
                 group_add();
-                label18.Visible = true;
-                label19.Text = new_FolderName;
-                label19.Visible = true;
-                Thread.Sleep(2000);
-                label18.Visible = false;
-                label19.Visible = false;
+                newgroup newgrp = new newgroup();
+                newgrp.FormBorderStyle = FormBorderStyle.None;
+                newgrp.Show();
+                newgroup.grp_name = new_FolderName;
+                newgrp.Close();
+                
             }
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
+            DirectAdvert.Properties.Settings.Default.group = folderList.SelectedIndex;
+            Properties.Settings.Default.Save();
+            Console.WriteLine(folderid.ToString()); //Console.WriteLine(zas.ToString()); 
             if (groupstatus == false)
             {
-                group_start(); //queryfolders(); 
-                int a = folderList.FindString(current_title);
-                folderList.SelectedIndex = a;
-                Console.WriteLine(folderid.ToString());
-                queryfolders();
-                folderList.SelectedIndex = a;
-                Console.WriteLine(folderid.ToString());
+                group_start();
             }
             if (groupstatus == true)
             {
-                group_pause(); //queryfolders();
-                int a = folderList.FindString(current_title);
-                Console.WriteLine(folderid.ToString() + " 1  " + a.ToString());
-                queryfolders();
-                Console.WriteLine(folderid.ToString() + " 2  " + a.ToString());
-                folderList.SelectedIndex = a;
-                Console.WriteLine(folderid.ToString() + " 3  " + a.ToString());
-                
+                group_pause();
             }
+            folderList.SelectedIndex = DirectAdvert.Properties.Settings.Default.group;
+            Console.WriteLine("{0}", DirectAdvert.Properties.Settings.Default.group);
         }
 
         private void button1_Click(object sender, EventArgs e)///delete group
@@ -653,6 +650,33 @@ namespace DirectAdvert
             group_delete();
             queryfolders();
             folderList.Refresh();
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.ClearSelection();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                var results = dataGridView1.SelectedRows.Cast<DataGridViewRow>().Select(x => Convert.ToString(x.Cells[0].Value));
+                foreach (string teaser in results)
+                {
+                    Console.WriteLine(teaser);
+                    teasers_to_del.Add(teaser);
+
+                }
+
+                List<string> teasers_to_del2 = teasers_to_del.Distinct().ToList<string>();
+                ads_array = new StringBuilder();
+                foreach (string teaser in teasers_to_del2)
+                    ads_array.Append("&ids[]=" + teaser);
+                Console.WriteLine(ads_array.ToString());
+                comboBox1.DataSource = teasers_to_del2.ToArray();
+                comboBox1.Refresh();
+            }
         }
     }
 }

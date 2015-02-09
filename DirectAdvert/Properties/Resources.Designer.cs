@@ -143,16 +143,6 @@ namespace DirectAdvert.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Minus {
-            get {
-                object obj = ResourceManager.GetObject("Minus", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap pause_blue {
             get {
                 object obj = ResourceManager.GetObject("pause_blue", resourceCulture);
@@ -176,6 +166,16 @@ namespace DirectAdvert.Properties {
         public static System.Drawing.Bitmap reino_unido {
             get {
                 object obj = ResourceManager.GetObject("reino_unido", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Remove {
+            get {
+                object obj = ResourceManager.GetObject("Remove", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
