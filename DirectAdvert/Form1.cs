@@ -44,8 +44,12 @@ namespace DirectAdvert
         public static object datasrc;
         public bool flag_create_NF,groupstatus;
         public StringBuilder ads_array;
+        public int PgSize;
+        public int CurrentPageIndex = 1;
+        public int TotalPage = 0;
         private const int CS_DROPSHADOW = 0x00020000;
         protected override CreateParams CreateParams
+
         {
             get
             {
@@ -147,7 +151,12 @@ namespace DirectAdvert
             loginButton.Enabled = false;
             pictureBox1.Visible = false;
             label11.Visible = false;
-            
+            signcount.Items.AddRange(new object[] {5,
+                        10,
+                        15,
+                        "All"});
+            signcount.SelectedIndex = 1;
+            PgSize = Convert.ToInt32(signcount.Items[1]);
             eyepassbox.Image = DirectAdvert.Properties.Resources.eye;
             loginBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             loginBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -202,7 +211,14 @@ namespace DirectAdvert
             #endregion
             #endregion
         }
-        
+        public void CalculateTotalPages()
+        {
+            int rowCount = dataGridView1.Rows.Count;
+            TotalPage = rowCount / PgSize;
+            // if any row left after calculated pages, add one more page 
+            if (rowCount % PgSize > 0)
+                TotalPage += 1;
+        }
 
         private void forgotPasslink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -465,6 +481,8 @@ namespace DirectAdvert
                 
             }
             this.Text = "Direct/Advert";
+            CalculateTotalPages();
+            Console.WriteLine(TotalPage.ToString());
         }
 
         public void group_add()
@@ -701,6 +719,24 @@ namespace DirectAdvert
         }
         folderList.SelectedIndex = DirectAdvert.Properties.Settings.Default.group;
         Console.WriteLine("{0}", DirectAdvert.Properties.Settings.Default.group);
+    }
+
+    private void button8_Click(object sender, EventArgs e)
+    {
+        if (checkBox1.Checked == false)
+            System.Windows.Forms.Application.Exit();
+        else if (checkBox1.Checked == true)
+        {
+            this.ClientSize = new System.Drawing.Size(307, 112);
+            loginPage.Visible = true;
+            tabControl1.Visible = false;
+        }
+    }
+
+    private void signcount_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        //CalculateTotalPages();
+        //Console.WriteLine(TotalPage.ToString());
     }
     }
 }
