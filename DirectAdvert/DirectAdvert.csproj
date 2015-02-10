@@ -60,6 +60,9 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -162,6 +165,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo_da.ico" />
+    <None Include="Resources\Transfer_Upload.png" />
+    <None Include="Resources\Toolbar_Play.png" />
+    <None Include="Resources\Toolbar_Pause.png" />
+    <None Include="Resources\Folder_Add.png" />
+    <None Include="Resources\FolderDelete.png" />
+    <None Include="Resources\up.png" />
+    <None Include="Resources\down.png" />
+    <None Include="Resources\Delete.png" />
+    <None Include="Resources\Trash - Empty.png" />
+    <None Include="Resources\Excel24.png" />
+    <None Include="Resources\Excel.png" />
     <None Include="Resources\glyphicons_174_pause.png" />
     <None Include="Resources\glyphicons_173_play.png" />
     <None Include="Resources\glyphicons_224_thin_arrow_left.png" />
