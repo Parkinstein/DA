@@ -35,31 +35,28 @@ namespace DirectAdvert
         public List<string> logins;
         private static int _ProcessId;
         private static string _CurrentInputLanguage;
-        static public string login_string;
-        static public string password_string;
-        public string pathFile;
-        public string fileData;
-        static public string tokenvalue;
-        static public string errorvalue;
+        static public string login_string,password_string,tokenvalue,errorvalue,balance,email,currency;
+        public string pathFile,fileData,decrypted,current_title,new_FolderName;
         static public int errorcode;
-        static public string balance;
-        static public string email;
-        static public string currency;
         static public bool accses;
-        public string decrypted;
-        public int folderid;
-        public RootObject userdataX;
-        public RootObject userdataY;
-        public RootObject userdataZ;
+        public int folderid,start_pos,zas;
+        public RootObject userdataV, userdataW, userdataX, userdataY, userdataZ;
         public static object datasrc;
-        public bool flag_create_NF;
-        public int start_pos;
+        public bool flag_create_NF,groupstatus;
         public StringBuilder ads_array;
-        public bool groupstatus;
-        public string current_title;
-        public string new_FolderName;
-        public List<string> teasers_to_del;
-        public int zas;
+        private const int CS_DROPSHADOW = 0x00020000;
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                // add the drop shadow flag for automatically drawing
+                // a drop shadow around the form
+                CreateParams cp = base.CreateParams;
+                cp.ClassStyle |= CS_DROPSHADOW;
+                return cp;
+            }
+        }
+
 
 
         #endregion
@@ -144,14 +141,13 @@ namespace DirectAdvert
             tabControl1.SelectTab("Page1");
             start_pos = 17;
             tabControl1.Visible = false;
-            teasers_to_del = new List<string>();
-            comboBox1.Items.Clear();
             flag_create_NF = false;
             this.ClientSize = new System.Drawing.Size(307, 112); 
             loginPage.Visible = true;
             loginButton.Enabled = false;
             pictureBox1.Visible = false;
             label11.Visible = false;
+            
             eyepassbox.Image = DirectAdvert.Properties.Resources.eye;
             loginBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             loginBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -434,7 +430,6 @@ namespace DirectAdvert
                 
                 queryteasers();
             }
-            //else if (userdata.error_code == 1016) { Console.WriteLine("1016"); }
         }
         public void queryteasers()
         {
@@ -467,10 +462,8 @@ namespace DirectAdvert
                 dataGridView1.AutoResizeColumns();
                 dataGridView1.AutoResizeRows();
                 dataGridView1.Columns[10].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                //dataGridView1.AutoSize = true;
                 
             }
-            else if (userdataY.error_code == 1016) { label11.Visible = true; }
             this.Text = "Direct/Advert";
         }
 
@@ -503,11 +496,11 @@ namespace DirectAdvert
             WebClient client = new WebClient();
             string address = ("https://api.directadvert.ru/set_groups_status.json?token=" + tokenvalue + "&groups_id[]=" + folderid.ToString() + "&status=paused");
             string reply = client.DownloadString(address);
-            RootObject userdata = new RootObject();
-            userdata = JsonConvert.DeserializeObject<RootObject>(reply);
-            if (userdata.success == true)
+            RootObject userdataV = new RootObject();
+            userdataV = JsonConvert.DeserializeObject<RootObject>(reply);
+            if (userdataV.success == true)
             {
-                pictureBox2.Image = DirectAdvert.Properties.Resources.pause_blue;
+                label18.Text = "Возобновить"; 
                 Console.WriteLine("Группа встала на паузу");
                 queryfolders();
             }
@@ -518,11 +511,11 @@ namespace DirectAdvert
             string address = ("https://api.directadvert.ru/set_groups_status.json?token=" + tokenvalue + "&groups_id[]=" + folderid.ToString() + "&status=active");
             
             string reply = client.DownloadString(address);
-            RootObject userdata = new RootObject();
-            userdata = JsonConvert.DeserializeObject<RootObject>(reply);
-            if (userdata.success == true)
+            RootObject userdataW = new RootObject();
+            userdataW = JsonConvert.DeserializeObject<RootObject>(reply);
+            if (userdataW.success == true)
             {
-                pictureBox2.Image = DirectAdvert.Properties.Resources.play_blue;
+                label18.Text = "Остановить";
                 Console.WriteLine("Группа стартовала");
                 queryfolders();
             }
@@ -539,12 +532,29 @@ namespace DirectAdvert
                 pictureBox2.Image = DirectAdvert.Properties.Resources.pause_blue;
             }
         }
-
+        private void send_delete_teaser() 
+        {
+            {
+                WebClient wc = new WebClient();
+                var URI = new Uri("https://api.directadvert.ru/delete_ad.json?token=" + tokenvalue);
+                //If any encoding is needed.
+                wc.Headers["Content-Type"] = "application/x-www-form-urlencoded";
+                //Or any other encoding type.
+                //If any key needed
+                //wc.Headers["KEY"] = "Your_Key_Goes_Here";
+                wc.UploadStringCompleted += new UploadStringCompletedEventHandler(wc_UploadStringCompleted);
+                wc.UploadString(URI, "POST", ads_array.ToString());
+            }
+            DirectAdvert.Properties.Settings.Default.group = folderList.SelectedIndex;
+            Properties.Settings.Default.Save();
+            queryteasers();
+            dataGridView1.Refresh();
+            folderList.SelectedIndex = DirectAdvert.Properties.Settings.Default.group;
+        }
         private void cancelButton_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
         }
-
         private void folderList_SelectedIndexChanged(object sender, EventArgs e)
         {
             folderList.DataSource = userdataX.account_details;
@@ -556,9 +566,9 @@ namespace DirectAdvert
             if (folderList.SelectedValue != null)
             {
                 if (folderList.SelectedValue.ToString() == "paused")
-                { pictureBox2.Image = DirectAdvert.Properties.Resources.pause_blue; groupstatus = false; }
+                { pictureBox2.Image = DirectAdvert.Properties.Resources.glyphicons_174_pause; label18.Text = "Возобновить"; groupstatus = false; }
                 if (folderList.SelectedValue.ToString() == "active")
-                { pictureBox2.Image = DirectAdvert.Properties.Resources.play_blue; groupstatus = true; }
+                { pictureBox2.Image = DirectAdvert.Properties.Resources.glyphicons_173_play; label18.Text = "Остановить"; groupstatus = true; }
             }
 
             queryteasers();
@@ -576,8 +586,6 @@ namespace DirectAdvert
             priceText.Text = ((double)dataGridView1.CurrentRow.Cells[10].Value).ToString();
             urlText.Text = (string)dataGridView1.CurrentRow.Cells[6].Value;
             statusBox.Text = (string)dataGridView1.CurrentRow.Cells[2].Value;
-            
-            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -596,7 +604,7 @@ namespace DirectAdvert
         {
             if (flag_create_NF == true)
             {
-                if (start_pos >= 134) { timer_animation_panel.Stop(); button2.Image = DirectAdvert.Properties.Resources.arr_up; }
+                if (start_pos >= 142) { timer_animation_panel.Stop(); button2.Image = DirectAdvert.Properties.Resources.glyphicons_224_thin_arrow_left; }
 
                 else start_pos += 5;
                 panel3.Location = new Point(163, start_pos);
@@ -604,7 +612,7 @@ namespace DirectAdvert
             }
             else 
             {
-                if (start_pos <= 17) { timer_animation_panel.Stop(); button2.Image = DirectAdvert.Properties.Resources.arr_dn; }
+                if (start_pos <= 17) { timer_animation_panel.Stop(); button2.Image = DirectAdvert.Properties.Resources.glyphicons_223_thin_right_arrow; }
                 else start_pos -= 5;
                 panel3.Location = new Point(163, start_pos);
 
@@ -630,19 +638,7 @@ namespace DirectAdvert
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            DirectAdvert.Properties.Settings.Default.group = folderList.SelectedIndex;
-            Properties.Settings.Default.Save();
-            Console.WriteLine(folderid.ToString()); //Console.WriteLine(zas.ToString()); 
-            if (groupstatus == false)
-            {
-                group_start();
-            }
-            if (groupstatus == true)
-            {
-                group_pause();
-            }
-            folderList.SelectedIndex = DirectAdvert.Properties.Settings.Default.group;
-            Console.WriteLine("{0}", DirectAdvert.Properties.Settings.Default.group);
+            
         }
 
         private void button1_Click(object sender, EventArgs e)///delete group
@@ -657,27 +653,55 @@ namespace DirectAdvert
             dataGridView1.ClearSelection();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e) //delete teasers
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 var results = dataGridView1.SelectedRows.Cast<DataGridViewRow>().Select(x => Convert.ToString(x.Cells[0].Value));
-                foreach (string teaser in results)
-                {
-                    Console.WriteLine(teaser);
-                    teasers_to_del.Add(teaser);
-
-                }
-
-                List<string> teasers_to_del2 = teasers_to_del.Distinct().ToList<string>();
+                Console.WriteLine(results.Count().ToString());
                 ads_array = new StringBuilder();
-                foreach (string teaser in teasers_to_del2)
-                    ads_array.Append("&ids[]=" + teaser);
-                Console.WriteLine(ads_array.ToString());
-                comboBox1.DataSource = teasers_to_del2.ToArray();
-                comboBox1.Refresh();
+                foreach (string teaser in results)
+                    ads_array.Append("&ids[]=" + Uri.EscapeDataString(teaser));
+ 
+                send_delete_teaser();
             }
         }
+
+
+
+    void wc_UploadStringCompleted(object sender, UploadStringCompletedEventArgs e)
+            {  
+
+                try            
+                    {          
+                        Console.WriteLine(e.Result); 
+                        //e.result fetches you the response against your POST request.         
+
+                    }
+
+                catch(Exception exc)         
+                    {             
+                        MessageBox.Show(exc.ToString());            
+                    }
+
+            }
+
+    private void label18_Click(object sender, EventArgs e)
+    {
+        DirectAdvert.Properties.Settings.Default.group = folderList.SelectedIndex;
+        Properties.Settings.Default.Save();
+        Console.WriteLine(folderid.ToString());
+        if (groupstatus == false)
+        {
+            group_start();
+        }
+        else if (groupstatus == true)
+        {
+            group_pause();
+        }
+        folderList.SelectedIndex = DirectAdvert.Properties.Settings.Default.group;
+        Console.WriteLine("{0}", DirectAdvert.Properties.Settings.Default.group);
+    }
     }
 }
         

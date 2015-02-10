@@ -162,6 +162,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo_da.ico" />
+    <None Include="Resources\glyphicons_174_pause.png" />
+    <None Include="Resources\glyphicons_173_play.png" />
+    <None Include="Resources\glyphicons_224_thin_arrow_left.png" />
+    <None Include="Resources\glyphicons_223_thin_right_arrow.png" />
+    <None Include="Resources\glyphicons_016_bin.png" />
+    <None Include="Resources\Write Document.png" />
     <None Include="Resources\Remove.png" />
     <None Include="Resources\arr_up.png" />
     <None Include="Resources\Minus.png" />

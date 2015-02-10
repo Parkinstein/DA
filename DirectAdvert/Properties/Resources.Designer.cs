@@ -113,6 +113,56 @@ namespace DirectAdvert.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap glyphicons_016_bin {
+            get {
+                object obj = ResourceManager.GetObject("glyphicons_016_bin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap glyphicons_173_play {
+            get {
+                object obj = ResourceManager.GetObject("glyphicons_173_play", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap glyphicons_174_pause {
+            get {
+                object obj = ResourceManager.GetObject("glyphicons_174_pause", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap glyphicons_223_thin_right_arrow {
+            get {
+                object obj = ResourceManager.GetObject("glyphicons_223_thin_right_arrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap glyphicons_224_thin_arrow_left {
+            get {
+                object obj = ResourceManager.GetObject("glyphicons_224_thin_arrow_left", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap loadinfo {
             get {
                 object obj = ResourceManager.GetObject("loadinfo", resourceCulture);
