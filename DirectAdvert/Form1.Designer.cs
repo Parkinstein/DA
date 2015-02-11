@@ -32,10 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(daForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Page1 = new System.Windows.Forms.TabPage();
-            this.label11 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button8 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.statusBox = new System.Windows.Forms.Label();
@@ -46,7 +47,10 @@
             this.teaserDescript = new System.Windows.Forms.TextBox();
             this.teaserHead = new System.Windows.Forms.TextBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.dataUser = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -55,6 +59,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.folderList = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -62,8 +67,29 @@
             this.label17 = new System.Windows.Forms.Label();
             this.new_group_name = new System.Windows.Forms.TextBox();
             this.button7 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.Page2 = new System.Windows.Forms.TabPage();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.button9 = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.loginPage = new System.Windows.Forms.Panel();
+            this.flagBox = new System.Windows.Forms.PictureBox();
+            this.eyepassbox = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
             this.savePasswordchkbx = new System.Windows.Forms.CheckBox();
@@ -74,46 +100,20 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.timer_animation_panel = new System.Windows.Forms.Timer(this.components);
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.button9 = new System.Windows.Forms.Button();
-            this.label14 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.flagBox = new System.Windows.Forms.PictureBox();
-            this.eyepassbox = new System.Windows.Forms.PictureBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.Page1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.dataUser.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel3.SuspendLayout();
             this.Page2.SuspendLayout();
-            this.loginPage.SuspendLayout();
-            this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            this.panel5.SuspendLayout();
+            this.loginPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flagBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eyepassbox)).BeginInit();
             this.SuspendLayout();
@@ -163,18 +163,6 @@
             this.Page1.ToolTipText = "Управление тизерами";
             this.Page1.UseVisualStyleBackColor = true;
             // 
-            // label11
-            // 
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label11.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label11.Location = new System.Drawing.Point(3, 252);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(786, 317);
-            this.label11.TabIndex = 47;
-            this.label11.Text = "ВЫБРАННАЯ\r\nГРУППА ПУСТА";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label11.Visible = false;
-            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -212,6 +200,30 @@
             this.button8.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button2
+            // 
+            this.button2.Image = global::DirectAdvert.Properties.Resources.Folder_Add;
+            this.button2.Location = new System.Drawing.Point(163, 105);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(166, 39);
+            this.button2.TabIndex = 61;
+            this.button2.Text = "Создать новую группу\r\n";
+            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Image = global::DirectAdvert.Properties.Resources.FolderDelete;
+            this.button1.Location = new System.Drawing.Point(163, 54);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(166, 39);
+            this.button1.TabIndex = 60;
+            this.button1.Text = "Удалить выбранную группу";
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel1
             // 
@@ -315,6 +327,27 @@
             this.dataGridView2.TabIndex = 50;
             this.dataGridView2.Visible = false;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Location = new System.Drawing.Point(293, 21);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(24, 25);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 49;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox3.ImageLocation = "";
+            this.pictureBox3.Location = new System.Drawing.Point(3, 96);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(150, 150);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 18;
+            this.pictureBox3.TabStop = false;
+            // 
             // dataUser
             // 
             this.dataUser.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -329,6 +362,15 @@
             this.dataUser.Name = "dataUser";
             this.dataUser.Size = new System.Drawing.Size(149, 89);
             this.dataUser.TabIndex = 3;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(51, 23);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(16, 18);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 65;
+            this.pictureBox1.TabStop = false;
             // 
             // label10
             // 
@@ -407,6 +449,18 @@
             this.folderList.TabIndex = 0;
             this.folderList.SelectedIndexChanged += new System.EventHandler(this.folderList_SelectedIndexChanged);
             // 
+            // label11
+            // 
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label11.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label11.Location = new System.Drawing.Point(3, 252);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(786, 322);
+            this.label11.TabIndex = 47;
+            this.label11.Text = "ВЫБРАННАЯ\r\nГРУППА ПУСТА";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label11.Visible = false;
+            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -480,6 +534,18 @@
             this.button7.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.button7.UseVisualStyleBackColor = true;
             // 
+            // button6
+            // 
+            this.button6.Image = global::DirectAdvert.Properties.Resources.Delete;
+            this.button6.Location = new System.Drawing.Point(163, 207);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(166, 39);
+            this.button6.TabIndex = 65;
+            this.button6.Text = "Удалить выбранные тизеры";
+            this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // Page2
             // 
             this.Page2.Controls.Add(this.label15);
@@ -505,6 +571,184 @@
             this.Page2.Text = "Пакетная загрузка тизеров";
             this.Page2.UseVisualStyleBackColor = true;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(13, 190);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(41, 13);
+            this.label15.TabIndex = 84;
+            this.label15.Text = "label15";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(13, 210);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(41, 13);
+            this.label19.TabIndex = 83;
+            this.label19.Text = "label19";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(13, 170);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(41, 13);
+            this.label20.TabIndex = 82;
+            this.label20.Text = "label20";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(13, 230);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(144, 13);
+            this.label21.TabIndex = 81;
+            this.label21.Text = "Тизеры еще не загружены";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(13, 276);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(316, 23);
+            this.progressBar1.Step = 1;
+            this.progressBar1.TabIndex = 80;
+            // 
+            // button11
+            // 
+            this.button11.Image = global::DirectAdvert.Properties.Resources.Transfer_Upload;
+            this.button11.Location = new System.Drawing.Point(13, 105);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(123, 39);
+            this.button11.TabIndex = 79;
+            this.button11.Text = "Старт";
+            this.button11.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button10
+            // 
+            this.button10.Image = global::DirectAdvert.Properties.Resources.Excel24;
+            this.button10.Location = new System.Drawing.Point(13, 16);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(123, 39);
+            this.button10.TabIndex = 78;
+            this.button10.Text = "Загрузить файл EXCEL";
+            this.button10.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label12.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.label12.Location = new System.Drawing.Point(250, 4);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(73, 13);
+            this.label12.TabIndex = 77;
+            this.label12.Text = "Возобновить";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label12.Click += new System.EventHandler(this.label12_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(165, 4);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(75, 13);
+            this.label13.TabIndex = 71;
+            this.label13.Text = "Список групп";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(163, 25);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 70;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // button4
+            // 
+            this.button4.Image = global::DirectAdvert.Properties.Resources.Folder_Add;
+            this.button4.Location = new System.Drawing.Point(163, 105);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(166, 39);
+            this.button4.TabIndex = 74;
+            this.button4.Text = "Создать новую группу\r\n";
+            this.button4.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button5
+            // 
+            this.button5.Image = global::DirectAdvert.Properties.Resources.FolderDelete;
+            this.button5.Location = new System.Drawing.Point(163, 54);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(166, 39);
+            this.button5.TabIndex = 73;
+            this.button5.Text = "Удалить выбранную группу";
+            this.button5.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Location = new System.Drawing.Point(293, 21);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(24, 25);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 72;
+            this.pictureBox4.TabStop = false;
+            // 
+            // panel2
+            // 
+            this.panel2.Location = new System.Drawing.Point(163, 17);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(166, 127);
+            this.panel2.TabIndex = 76;
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.button9);
+            this.panel5.Controls.Add(this.label14);
+            this.panel5.Controls.Add(this.textBox1);
+            this.panel5.Location = new System.Drawing.Point(163, 17);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(166, 124);
+            this.panel5.TabIndex = 75;
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(8, 73);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(145, 23);
+            this.button9.TabIndex = 2;
+            this.button9.Text = "Создать группу";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(9, 5);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(128, 26);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "Название создаваемой\r\nгруппы";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(9, 42);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(144, 20);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
             // loginPage
             // 
             this.loginPage.Controls.Add(this.flagBox);
@@ -521,6 +765,27 @@
             this.loginPage.Name = "loginPage";
             this.loginPage.Size = new System.Drawing.Size(800, 600);
             this.loginPage.TabIndex = 1;
+            // 
+            // flagBox
+            // 
+            this.flagBox.Location = new System.Drawing.Point(135, 69);
+            this.flagBox.Name = "flagBox";
+            this.flagBox.Size = new System.Drawing.Size(30, 30);
+            this.flagBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.flagBox.TabIndex = 12;
+            this.flagBox.TabStop = false;
+            // 
+            // eyepassbox
+            // 
+            this.eyepassbox.Image = global::DirectAdvert.Properties.Resources.eye;
+            this.eyepassbox.Location = new System.Drawing.Point(146, 40);
+            this.eyepassbox.Name = "eyepassbox";
+            this.eyepassbox.Size = new System.Drawing.Size(18, 18);
+            this.eyepassbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.eyepassbox.TabIndex = 11;
+            this.eyepassbox.TabStop = false;
+            this.eyepassbox.MouseLeave += new System.EventHandler(this.eyepassbox_MouseLeave);
+            this.eyepassbox.MouseHover += new System.EventHandler(this.eyepassbox_MouseHover);
             // 
             // label2
             // 
@@ -611,270 +876,6 @@
             this.timer_animation_panel.Interval = 1;
             this.timer_animation_panel.Tick += new System.EventHandler(this.timer_animation_panel_Tick);
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label12.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label12.Location = new System.Drawing.Point(250, 4);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(73, 13);
-            this.label12.TabIndex = 77;
-            this.label12.Text = "Возобновить";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.label12.Click += new System.EventHandler(this.label12_Click);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(165, 4);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(75, 13);
-            this.label13.TabIndex = 71;
-            this.label13.Text = "Список групп";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(163, 25);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 70;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // panel2
-            // 
-            this.panel2.Location = new System.Drawing.Point(163, 17);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(166, 127);
-            this.panel2.TabIndex = 76;
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.button9);
-            this.panel5.Controls.Add(this.label14);
-            this.panel5.Controls.Add(this.textBox1);
-            this.panel5.Location = new System.Drawing.Point(163, 17);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(166, 124);
-            this.panel5.TabIndex = 75;
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(8, 73);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(145, 23);
-            this.button9.TabIndex = 2;
-            this.button9.Text = "Создать группу";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(9, 5);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(128, 26);
-            this.label14.TabIndex = 1;
-            this.label14.Text = "Название создаваемой\r\nгруппы";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(9, 42);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(144, 20);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // button2
-            // 
-            this.button2.Image = global::DirectAdvert.Properties.Resources.Folder_Add;
-            this.button2.Location = new System.Drawing.Point(163, 105);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(166, 39);
-            this.button2.TabIndex = 61;
-            this.button2.Text = "Создать новую группу\r\n";
-            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            this.button1.Image = global::DirectAdvert.Properties.Resources.FolderDelete;
-            this.button1.Location = new System.Drawing.Point(163, 54);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(166, 39);
-            this.button1.TabIndex = 60;
-            this.button1.Text = "Удалить выбранную группу";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Location = new System.Drawing.Point(293, 21);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(24, 25);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 49;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox3.ImageLocation = "";
-            this.pictureBox3.Location = new System.Drawing.Point(3, 96);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(150, 150);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 18;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(51, 23);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(16, 18);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 65;
-            this.pictureBox1.TabStop = false;
-            // 
-            // button6
-            // 
-            this.button6.Image = global::DirectAdvert.Properties.Resources.Delete;
-            this.button6.Location = new System.Drawing.Point(163, 207);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(166, 39);
-            this.button6.TabIndex = 65;
-            this.button6.Text = "Удалить выбранные тизеры";
-            this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // button11
-            // 
-            this.button11.Image = global::DirectAdvert.Properties.Resources.Transfer_Upload;
-            this.button11.Location = new System.Drawing.Point(13, 105);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(123, 39);
-            this.button11.TabIndex = 79;
-            this.button11.Text = "Старт";
-            this.button11.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.button11.UseVisualStyleBackColor = true;
-            // 
-            // button10
-            // 
-            this.button10.Image = global::DirectAdvert.Properties.Resources.Excel24;
-            this.button10.Location = new System.Drawing.Point(13, 16);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(123, 39);
-            this.button10.TabIndex = 78;
-            this.button10.Text = "Загрузить файл EXCEL";
-            this.button10.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
-            // 
-            // button4
-            // 
-            this.button4.Image = global::DirectAdvert.Properties.Resources.Folder_Add;
-            this.button4.Location = new System.Drawing.Point(163, 105);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(166, 39);
-            this.button4.TabIndex = 74;
-            this.button4.Text = "Создать новую группу\r\n";
-            this.button4.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button5
-            // 
-            this.button5.Image = global::DirectAdvert.Properties.Resources.FolderDelete;
-            this.button5.Location = new System.Drawing.Point(163, 54);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(166, 39);
-            this.button5.TabIndex = 73;
-            this.button5.Text = "Удалить выбранную группу";
-            this.button5.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Location = new System.Drawing.Point(293, 21);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(24, 25);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox4.TabIndex = 72;
-            this.pictureBox4.TabStop = false;
-            // 
-            // flagBox
-            // 
-            this.flagBox.Location = new System.Drawing.Point(135, 69);
-            this.flagBox.Name = "flagBox";
-            this.flagBox.Size = new System.Drawing.Size(30, 30);
-            this.flagBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.flagBox.TabIndex = 12;
-            this.flagBox.TabStop = false;
-            // 
-            // eyepassbox
-            // 
-            this.eyepassbox.Image = global::DirectAdvert.Properties.Resources.eye;
-            this.eyepassbox.Location = new System.Drawing.Point(146, 40);
-            this.eyepassbox.Name = "eyepassbox";
-            this.eyepassbox.Size = new System.Drawing.Size(18, 18);
-            this.eyepassbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.eyepassbox.TabIndex = 11;
-            this.eyepassbox.TabStop = false;
-            this.eyepassbox.MouseLeave += new System.EventHandler(this.eyepassbox_MouseLeave);
-            this.eyepassbox.MouseHover += new System.EventHandler(this.eyepassbox_MouseHover);
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(13, 276);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(316, 23);
-            this.progressBar1.Step = 1;
-            this.progressBar1.TabIndex = 80;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(13, 190);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(41, 13);
-            this.label15.TabIndex = 84;
-            this.label15.Text = "label15";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(13, 210);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(41, 13);
-            this.label19.TabIndex = 83;
-            this.label19.Text = "label19";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(13, 170);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(41, 13);
-            this.label20.TabIndex = 82;
-            this.label20.Text = "label20";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(13, 230);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(144, 13);
-            this.label21.TabIndex = 81;
-            this.label21.Text = "Тизеры еще не загружены";
-            // 
             // daForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -894,21 +895,21 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.dataUser.ResumeLayout(false);
             this.dataUser.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.Page2.ResumeLayout(false);
             this.Page2.PerformLayout();
-            this.loginPage.ResumeLayout(false);
-            this.loginPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            this.loginPage.ResumeLayout(false);
+            this.loginPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flagBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eyepassbox)).EndInit();
             this.ResumeLayout(false);

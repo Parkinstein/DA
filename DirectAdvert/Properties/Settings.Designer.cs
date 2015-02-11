@@ -34,5 +34,17 @@ namespace DirectAdvert.Properties {
                 this["group"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int folderid {
+            get {
+                return ((int)(this["folderid"]));
+            }
+            set {
+                this["folderid"] = value;
+            }
+        }
     }
 }
