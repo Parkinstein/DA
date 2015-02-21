@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -25,28 +26,63 @@ namespace DirectAdvert
         }
         #region "Variables"
         public AutoCompleteStringCollection colValues = new AutoCompleteStringCollection();
-        [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         private static extern IntPtr GetKeyboardLayout(int WindowsThreadProcessID);
-        [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         private static extern int GetWindowThreadProcessId(IntPtr handleWindow, out int lpdwProcessID);
-        [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         private static extern IntPtr GetForegroundWindow();
         private static InputLanguageCollection _InstalledInputLanguages;
         public static List<Input> datalog;
         public List<string> logins, lAnnounces, lBase64pict, lcommands, lpictures, lPrice, lTitles, lUrl;
         private static int _ProcessId;
         private static string _CurrentInputLanguage;
-        static public string login_string, password_string, tokenvalue, errorvalue, balance, email, currency;
-        public string textend1, pathFile, imagestring_pre, fileData, balanseRounded, decrypted, current_title, new_FolderName, filename, filepath, foldername, imagestring, textend;
-        static public int errorcode;
-        public double allcounts, max_teasers_end, max_teasers,balance_c;
+        static public string datenow,datePatt,login_string, password_string, tokenvalue, errorvalue, balance, email, currency, current_title, current_announce, current_url;
+        public string textend1, textend2, pathFile, imagestring_pre, fileData, balanseRounded, decrypted,  new_FolderName, filename, filepath, foldername, imagestring, textend;
+        static public int errorcode, current_group, teaser_to_edit, selected_group;
+        public static double allcounts, max_teasers_end, max_teasers,balance_c, current_price;
+        public static byte[] imagebytes;
         public string[] teaser_titlles;
         static public bool accses;
-        public int folderid, folderid1,start_pos, zas, length_mass;
-        public RootObject userdataV, userdataW, userdataX, userdataY, userdataZ;
+        public int folderid, folderid1, start_pos, zas, length_mass;
+        public static RootObject userdataT,userdataU, userdataV, userdataW, userdataX, userdataY, userdataZ;
         public static object datasrc;
         public bool flag_create_NF, groupstatus;
         public StringBuilder ads_array;
+        public static DateTime Date_end;
+        //private bool _drawGradient = true;
+        //private Color _startColor = Color.Black;
+        //private Color _endColor = Color.FromArgb(255,175,0);
+        //private float _angle = 45;
+
+        //private bool _drawShadow = true;
+        //private float _yOffset = 1;
+        //private float _xOffset = 1;
+        //private Color _shadowColor = Color.Black;
+        //protected override void OnPaint(PaintEventArgs e)
+        //{
+        //    base.OnPaint(e);
+        //    e.Graphics.SmoothingMode =
+        //       System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+        //    if (_drawGradient == true)
+        //    {
+        //        LinearGradientBrush brush = new LinearGradientBrush(new
+        //           System.Drawing.Rectangle(0, 0, this.Width, this.Height),
+        //           _startColor, _endColor, _angle, true);
+        //        e.Graphics.FillRectangle(brush, 0, 0,
+        //           this.Width, this.Height);
+        //    }
+
+        //    if (_drawShadow == true)
+        //        e.Graphics.DrawString(this.Text, this.Font,
+        //          new SolidBrush(_shadowColor), _xOffset,
+        //          _yOffset, StringFormat.GenericDefault);
+
+        //    e.Graphics.DrawString(this.Text, this.Font,
+        //          new SolidBrush(this.ForeColor), 0, 0,
+        //          StringFormat.GenericDefault);
+        //}
         private const int CS_DROPSHADOW = 0x00020000;
         protected override CreateParams CreateParams
         {
@@ -93,47 +129,82 @@ namespace DirectAdvert
             public AccountData account_data { get; set; }
             public List<AccountDetail> account_details { get; set; }
             public List<GroupTeaser> group_teasers { get; set; }
+            public TeaserInfo teaser_info { get; set; }
             public bool success { get; set; }
             public int error_code { get; set; }
             public string error_message { get; set; }
             public int id { get; set; }
-        }
-        public class AccountData
-        {
-            public string email { get; set; }
-            public string balance { get; set; }
-            public string currency { get; set; }
+            public class AccountData
+            {
+                public string email { get; set; }
+                public string balance { get; set; }
+                public string currency { get; set; }
+            }
+            public class TeaserInfo
+            {
+                public int ad_id { get; set; }
+                public string title { get; set; }
+                public string url { get; set; }
+                public string image_url { get; set; }
+                public string status { get; set; }
+                public Statistics statistics { get; set; }
 
+                public class Statistics
+                {
+                    public Current current { get; set; }
+                    public Delta delta { get; set; }
+                    public class Current
+                    {
+                        public int shows { get; set; }
+                        public int clicks { get; set; }
+                        public int actions { get; set; }
+                        public double expense { get; set; }
+                        public double ctr { get; set; }
+                        public double cpc { get; set; }
+                    }
+                    public class Delta
+                    {
+                        public int shows { get; set; }
+                        public int clicks { get; set; }
+                        public int actions { get; set; }
+                        public double expense { get; set; }
+                        public double ctr { get; set; }
+                        public double cpc { get; set; }
+                    }
+                }
+            }
+            public class AccountDetail
+            {
+                public int group_id { get; set; }
+                public string title { get; set; }
+                public object max_clicks_workday { get; set; }
+                public object max_clicks_weekend { get; set; }
+                public int? all_count { get; set; }
+                public int? active_count { get; set; }
+                public string status { get; set; }
+                public bool success { get; set; }
+            }
+            public class GroupTeaser
+            {
+                public int ad_id { get; set; }
+                public int group_id { get; set; }
+                public string status { get; set; }
+                public string title { get; set; }
+                public string announce { get; set; }
+                public int is_banner { get; set; }
+                public string url { get; set; }
+                public string image_url { get; set; }
+                public string image_string { get; set; }
+                public object action_url { get; set; }
+                public double buy_price { get; set; }
+                public int action_price { get; set; }
+                public int action_price_fixed { get; set; }
+                public int action_price_allow { get; set; }
+            }
+            
+            
         }
-        public class AccountDetail
-        {
-            public int group_id { get; set; }
-            public string title { get; set; }
-            public object max_clicks_workday { get; set; }
-            public object max_clicks_weekend { get; set; }
-            public int? all_count { get; set; }
-            public int? active_count { get; set; }
-            public string status { get; set; }
-            public bool success { get; set; }
-        }
-        public class GroupTeaser
-        {
-            public int ad_id { get; set; }
-            public int group_id { get; set; }
-            public string status { get; set; }
-            public string title { get; set; }
-            public string announce { get; set; }
-            public int is_banner { get; set; }
-            public string url { get; set; }
-            public string image_url { get; set; }
-            public string image_string { get; set; }
-            public object action_url { get; set; }
-            public double buy_price { get; set; }
-            public int action_price { get; set; }
-            public int action_price_fixed { get; set; }
-            public int action_price_allow { get; set; }
-        }
-        #endregion
+  #endregion
         private void Form1_Load(object sender, EventArgs e)
         {
             tabControl1.SelectTab("Page1");
@@ -144,10 +215,10 @@ namespace DirectAdvert
             loginPage.Visible = true;
             loginButton.Enabled = false;
             pictureBox1.Visible = false;
-            //label7.Text = "";
-            //label8.Text = "";
-            //label9.Text = "";
-            //label10.Text = "";
+            datePatt = @"yyyy-MM-dd";
+            Date_end = DateTime.Now;
+            datenow = Date_end.Date.ToString(datePatt);
+            Console.WriteLine(datenow);
             label11.Visible = false;
             eyepassbox.Image = DirectAdvert.Properties.Resources.eye;
             loginBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -265,16 +336,7 @@ namespace DirectAdvert
                             string encrypted = DPAPI.Encrypt(DPAPI.KeyType.UserKey, decrypted, entropy);
                             File.WriteAllText(pathFile, encrypted);
                             frm.label1.Text = "Данные были перезаписаны";
-                            //label7.Text = "";
-                            //label8.Text = "";
-                            //label9.Text = "";
-                            //label10.Text = "";
-                            //pictureBox3.Image = null;
-                            //priceText.Text = "";
-                            //urlText.Text = "";
-                            //statusBox.Text = "";
-                            //teaserHead.Text = "";
-                            //teaserDescript.Text = "";
+
                             querytoken();
                         }
                         if (frm.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
@@ -374,8 +436,9 @@ namespace DirectAdvert
             userdata = JsonConvert.DeserializeObject<RootObject>(reply);
             if (userdata.success == true)
             {
-                Console.WriteLine("отработала querytoken ");
                 tokenvalue = userdata.token;
+                Console.WriteLine("отработала querytoken " + tokenvalue);
+
                 currency = userdata.account_data.currency;
                 if (currency == "RUR") { pictureBox1.Visible = true; pictureBox1.Image = DirectAdvert.Properties.Resources.russia; }
                 label7.Text = userdata.account_data.email;
@@ -423,11 +486,12 @@ namespace DirectAdvert
                     }
                 }
                 queryteasers();
+                queryteaserstat();
             }
         }
         public void queryteasers()
         {
-            this.Text = "Идет получение данных...";
+            this.Text = "Получаем тизеры...";
             WebClient client = new WebClient();
             string address = ("https://api.directadvert.ru/get_group_teasers.json" + "?token=" + tokenvalue + "&group_id=" + folderid);
             string reply = client.DownloadString(address);
@@ -446,13 +510,9 @@ namespace DirectAdvert
                 dataGridView1.Columns[4].HeaderText = "Текст";
                 dataGridView1.Columns[5].Visible = false;
                 dataGridView1.Columns[6].HeaderText = "URL";
-                dataGridView1.Columns[7].Visible = false;
-                dataGridView1.Columns[8].Visible = false;
-                dataGridView1.Columns[9].Visible = false;
+                dataGridView1.Columns[7].Visible = false; dataGridView1.Columns[8].Visible = false; dataGridView1.Columns[9].Visible = false;
                 dataGridView1.Columns[10].HeaderText = "Цена";
-                dataGridView1.Columns[11].Visible = false;
-                dataGridView1.Columns[12].Visible = false;
-                dataGridView1.Columns[13].Visible = false;
+                dataGridView1.Columns[11].Visible = false; dataGridView1.Columns[12].Visible = false; dataGridView1.Columns[13].Visible = false;
                 dataGridView1.AutoResizeColumns();
                 dataGridView1.AutoResizeRows();
                 dataGridView1.Columns[10].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -467,6 +527,22 @@ namespace DirectAdvert
                 teaserHead.Text = "";
                 teaserDescript.Text = "";
             }
+            this.Text = "Direct/Advert";
+        }
+        public void queryteaserstat()
+        {
+            this.Text = "Получаем статистику...";
+            WebClient client = new WebClient();
+            string address = ("https://api.directadvert.ru/get_teaser_info.json" + "?token=" + tokenvalue + "&id=" + teaser_to_edit);
+            string reply = client.DownloadString(address);
+            userdataT = JsonConvert.DeserializeObject<RootObject>(reply);
+            label30.Text = (userdataT.teaser_info.statistics.current.shows).ToString();
+            label31.Text = (userdataT.teaser_info.statistics.current.clicks).ToString();
+            label32.Text = (userdataT.teaser_info.statistics.current.ctr).ToString();
+            label36.Text = (userdataT.teaser_info.statistics.delta.shows).ToString();
+            label35.Text = (userdataT.teaser_info.statistics.delta.clicks).ToString();
+            label34.Text = (userdataT.teaser_info.statistics.delta.ctr).ToString();
+            
             this.Text = "Direct/Advert";
         }
         public void group_add()
@@ -546,7 +622,8 @@ namespace DirectAdvert
                 RootObject userdata = JsonConvert.DeserializeObject<RootObject>(result);
                 if (userdata.success == true)
                 {
-                    queryteasers();
+                    queryfolders();
+                    label9.Refresh();
                     dataGridView1.Refresh();
                 }
             }
@@ -578,19 +655,55 @@ namespace DirectAdvert
             }
 
             queryteasers();
+            selected_group = folderList.SelectedIndex;
         }
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            byte[] imagebytes = Convert.FromBase64String((string)dataGridView1.CurrentRow.Cells[8].Value);
+            imagebytes = Convert.FromBase64String((string)dataGridView1.CurrentRow.Cells[8].Value);
             MemoryStream ms = new MemoryStream(imagebytes, 0, imagebytes.Length);
             ms.Write(imagebytes, 0, imagebytes.Length);
             if(dataGridView1.CurrentRow.Cells[8].Value.ToString() != "")
             pictureBox3.Image = Image.FromStream(ms, true);
-            teaserHead.Text = (string)dataGridView1.CurrentRow.Cells[3].Value;
-            teaserDescript.Text = (string)dataGridView1.CurrentRow.Cells[4].Value;
-            priceText.Text = ((double)dataGridView1.CurrentRow.Cells[10].Value).ToString();
-            urlText.Text = (string)dataGridView1.CurrentRow.Cells[6].Value;
+            teaserHead.Text = current_title = (string)dataGridView1.CurrentRow.Cells[3].Value;
+            teaserDescript.Text = current_announce = (string)dataGridView1.CurrentRow.Cells[4].Value;
+            priceText.Text  = ((double)dataGridView1.CurrentRow.Cells[10].Value).ToString();
+            current_price = (double)dataGridView1.CurrentRow.Cells[10].Value;
+            urlText.Text = current_url = (string)dataGridView1.CurrentRow.Cells[6].Value;
             statusBox.Text = (string)dataGridView1.CurrentRow.Cells[2].Value;
+            current_group = folderid;
+            teaser_to_edit = (int)dataGridView1.CurrentRow.Cells[0].Value;
+            if (dataGridView1.SelectedRows.Count > 1)
+                button7.Enabled = false;
+            else 
+            { 
+                button7.Enabled = true;
+                WebClient client = new WebClient();
+                string address = ("https://api.directadvert.ru/get_teaser_info.json" + "?token=" + tokenvalue + "&id=" + teaser_to_edit);
+                string reply = client.DownloadString(address);
+                userdataT = JsonConvert.DeserializeObject<RootObject>(reply);
+                label30.Text = (userdataT.teaser_info.statistics.current.shows).ToString();
+                label31.Text = (userdataT.teaser_info.statistics.current.clicks).ToString();
+                label32.Text = (userdataT.teaser_info.statistics.current.ctr).ToString();
+                label36.Text = (userdataT.teaser_info.statistics.delta.shows).ToString();
+                label35.Text = (userdataT.teaser_info.statistics.delta.clicks).ToString();
+                label34.Text = (userdataT.teaser_info.statistics.delta.ctr).ToString();
+                //System.Windows.Forms.DataVisualization.Charting.Series today = chart1.Series["Yesterday"];
+                //System.Windows.Forms.DataVisualization.Charting.Series yesterday = chart1.Series["Today"];
+                //int y_shows_today = userdataT.teaser_info.statistics.current.shows;
+                //int y_click_today = userdataT.teaser_info.statistics.current.clicks;
+                //int y_ctr_today = Convert.ToInt32(userdataT.teaser_info.statistics.current.ctr);
+                //today.Points[0].SetValueY(y_shows_today);
+                //today.Points[1].SetValueY(y_click_today);
+                //today.Points[2].SetValueY(y_ctr_today);
+                //int y_shows_yesterday = userdataT.teaser_info.statistics.delta.shows;
+                //int y_click_yesterday = userdataT.teaser_info.statistics.delta.clicks;
+                //int y_ctr_yesterday = Convert.ToInt32(userdataT.teaser_info.statistics.delta.ctr);
+                //yesterday.Points[0].SetValueY(y_shows_yesterday);
+                //yesterday.Points[1].SetValueY(y_click_yesterday);
+                //yesterday.Points[2]
+                //yesterday.Points[2].SetValueY(y_ctr_yesterday);
+
+            }
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -646,10 +759,7 @@ namespace DirectAdvert
             queryfolders();
             folderList.Refresh();
         }
-        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            dataGridView1.ClearSelection();
-        }
+
         private void button6_Click(object sender, EventArgs e) //delete teasers
         {
             if (dataGridView1.SelectedRows.Count > 0)
@@ -720,7 +830,10 @@ namespace DirectAdvert
                 folderid1 = DirectAdvert.Properties.Settings.Default.folderid;
                 string balanceRounded_format = balanseRounded.Replace(".", ",");
                 double balance_d = Double.Parse(balanceRounded_format);
+                label20.Text = "Баланс аккаунта - " + balanseRounded;
                 balance_c = Math.Round(balance_d, 0);
+                max_teasers = balance_c / 50;
+                max_teasers_end = max_teasers - allcounts;
                 if (max_teasers_end == 1 || max_teasers_end == 21 || max_teasers_end == 31 || max_teasers_end == 41 || max_teasers_end == 51 || max_teasers_end == 61)
                 {
                     textend = "";
@@ -746,12 +859,12 @@ namespace DirectAdvert
                     textend1 = "ов";
                 }
 
-                label6.Text = "В аккаунте " + allcounts + " тизер" + textend1;
-                label6.Refresh();
-                label5.Text = "Вы можете загрузить еще " + max_teasers_end.ToString() + " тизер" + textend;
-                label5.Refresh();
+                label15.Text = "В аккаунте " + allcounts + " тизер" + textend1;
+                label15.Refresh();
+                label19.Text = "Вы можете загрузить еще " + max_teasers_end.ToString() + " тизер" + textend;
+                label19.Refresh();
             }
-            else if (tabControl1.SelectedIndex == 0) { this.ClientSize = new System.Drawing.Size(800, 600); }
+            else if (tabControl1.SelectedIndex == 0) { this.ClientSize = new System.Drawing.Size(800, 600); dataGridView1.Refresh(); }
         }
         private void label12_Click(object sender, EventArgs e)
         {
@@ -937,6 +1050,7 @@ namespace DirectAdvert
                 command.Append("&image=" + lBase64pict[i]);
                 //Console.WriteLine(lBase64pict[i]);
                 lcommands.Add(command.ToString());
+                double res = max_teasers_end - lcommands.Count;
                 if (lcommands.Count == 1 || lcommands.Count == 21 || lcommands.Count == 31 || lcommands.Count == 41 || lcommands.Count == 51 || lcommands.Count == 61)
                 {
                     textend = "";
@@ -949,11 +1063,36 @@ namespace DirectAdvert
                 {
                     textend = "ов";
                 }
+                if (allcounts == 1 || allcounts == 21 || allcounts == 31 || allcounts == 41 || allcounts == 51 || allcounts == 61)
+                {
+                    textend1 = "";
+                }
+                if ((allcounts > 1 && allcounts < 5) || (allcounts > 21 && allcounts < 25) || (allcounts > 31 && allcounts < 35) || (allcounts > 41 && allcounts < 45) || (allcounts > 51 && allcounts < 55) || (allcounts > 61 && allcounts < 65))
+                {
+                    textend1 = "а";
+                }
+                if ((allcounts > 4 && allcounts < 21) || (allcounts > 24 && allcounts < 31) || (allcounts > 34 && allcounts < 41) || (allcounts > 44 && allcounts < 51) || (allcounts > 54 && allcounts < 61) || (allcounts > 64 && allcounts < 71))
+                {
+                    textend1 = "ов";
+                }
+                if (res == 1 || res == 21 || res == 31 || res == 41 || res == 51 || res == 61)
+                {
+                    textend2 = "";
+                }
+                if ((res > 1 && res < 5) || (res > 21 && res < 25) || (res > 31 && res < 35) || (res > 41 && res < 45) || (res > 51 && res < 55) || (res > 61 && res < 65))
+                {
+                    textend2 = "а";
+                }
+                if ((res > 4 && res < 21) || (res > 24 && res < 31) || (res > 34 && res < 41) || (res > 44 && res < 51) || (res > 54 && res < 61) || (res > 64 && res < 71))
+                {
+                    textend2 = "ов";
+                }
                 label21.Text = ("Добавлено " + lcommands.Count.ToString() + " тизер" + textend);
                 label21.Refresh();
-
-                label5.Refresh();
-                label6.Refresh();
+                label15.Text = "В аккаунте " + allcounts + " тизер" + textend1;
+                label15.Refresh();
+                label19.Text = "Вы можете загрузить еще " + res + " тизер" + textend2;
+                label19.Refresh();
                 progressBar1.PerformStep();
                 Thread.Sleep(300);
             }
@@ -966,7 +1105,8 @@ namespace DirectAdvert
             progressBar1.Maximum = teaser_titlles.Length;
             progressBar1.Step = 1;
             progressBar1.Value = 0;
-            int d = 0; 
+            int d = 0;
+            this.Text = "Идет отправка данных...";
             foreach (var com in lcommands)
             {
                     WebClient wc = new WebClient();
@@ -983,13 +1123,96 @@ namespace DirectAdvert
                     progressBar1.PerformStep();
                 DirectAdvert.Properties.Settings.Default.group = folderList.SelectedIndex;
                 Properties.Settings.Default.Save();
-                //queryteasers();
-                dataGridView1.Refresh();
-                folderList.SelectedIndex = DirectAdvert.Properties.Settings.Default.group;
-            }
+                }
+
             group_pause();
+            folderList.SelectedIndex = DirectAdvert.Properties.Settings.Default.group;
+            dataGridView1.Refresh();
+            this.Text = "Direct/Advert";
+     
                 
         }
+        private void button7_Click(object sender, EventArgs e) // edit teaser
+        {
+            teaser_edit teasedit = new teaser_edit();
+            teasedit.Show();
+        }
+        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            button7_Click(sender, e);
+        }
+        private void dataGridView1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+
+                dataGridView1.MultiSelect = false;
+                var h = dataGridView1.HitTest(e.X, e.Y);
+                if (h.Type == DataGridViewHitTestType.Cell)
+                {
+                    //LNK_id = dataGridView1.Rows[h.RowIndex].Cells["id_lnkcheck"].Value.ToString();
+                    dataGridView1.Rows[h.RowIndex].Selected = true;
+                }
+                
+            }
+            else if (e.Button == MouseButtons.Left) { dataGridView1.MultiSelect = true; }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void edit_Click(object sender, EventArgs e)
+        {
+            button7_Click(sender, e);
+        }
+
+        private void delete_Click(object sender, EventArgs e)
+        {
+            button6_Click(sender, e);
+        }
+
+        private void stat_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+        //private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        //{
+        //    DataGridViewColumn newColumn = dataGridView1.Columns[e.ColumnIndex];
+        //    DataGridViewColumn oldColumn = dataGridView1.SortedColumn;
+        //    ListSortDirection direction;
+
+        //    // If oldColumn is null, then the DataGridView is not sorted. 
+        //    if (oldColumn != null)
+        //    {
+        //        // Sort the same column again, reversing the SortOrder. 
+        //        if (oldColumn == newColumn &&
+        //            dataGridView1.SortOrder == SortOrder.Ascending)
+        //        {
+        //            direction = ListSortDirection.Descending;
+        //        }
+        //        else
+        //        {
+        //            // Sort a new column and remove the old SortGlyph.
+        //            direction = ListSortDirection.Ascending;
+        //            oldColumn.HeaderCell.SortGlyphDirection = SortOrder.None;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        direction = ListSortDirection.Ascending;
+        //    }
+
+        //    // Sort the selected column.
+        //    dataGridView1.Sort(newColumn, direction);
+        //    newColumn.HeaderCell.SortGlyphDirection =
+        //        direction == ListSortDirection.Ascending ?
+        //        SortOrder.Ascending : SortOrder.Descending;
+        //}
 
     }
 }

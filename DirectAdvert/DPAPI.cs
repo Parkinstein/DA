@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 public class DPAPI
 {
-    [DllImport("crypt32.dll",
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA2101:SpecifyMarshalingForPInvokeStringArguments", MessageId = "1"), DllImport("crypt32.dll",
                 SetLastError = true,
                 CharSet = System.Runtime.InteropServices.CharSet.Auto)]
     private static extern
@@ -18,7 +18,7 @@ public class DPAPI
                                     int dwFlags,
                                 ref DATA_BLOB pCipherText);
 
-    [DllImport("crypt32.dll",
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), DllImport("crypt32.dll",
                 SetLastError = true,
                 CharSet = System.Runtime.InteropServices.CharSet.Auto)]
     private static extern
@@ -30,7 +30,7 @@ public class DPAPI
                                     int dwFlags,
                                 ref DATA_BLOB pPlainText);
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable"), StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal struct DATA_BLOB
     {
         public int cbData;

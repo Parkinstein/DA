@@ -17,6 +17,7 @@ namespace DirectAdvert
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new daForm());
+            //Application.Run(new Teaser_stat());
         }
     }
 }

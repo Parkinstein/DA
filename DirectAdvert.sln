@@ -8,13 +8,45 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		forMAC|Any CPU = forMAC|Any CPU
+		forMAC|x64 = forMAC|x64
+		forMAC|x86 = forMAC|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+		Web|Any CPU = Web|Any CPU
+		Web|x64 = Web|x64
+		Web|x86 = Web|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Debug|x64.ActiveCfg = Debug|x64
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Debug|x64.Build.0 = Debug|x64
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Debug|x86.ActiveCfg = Debug|x86
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Debug|x86.Build.0 = Debug|x86
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.forMAC|Any CPU.ActiveCfg = forMAC|x64
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.forMAC|Any CPU.Build.0 = forMAC|x64
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.forMAC|x64.ActiveCfg = forMAC|x64
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.forMAC|x64.Build.0 = forMAC|x64
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.forMAC|x64.Deploy.0 = forMAC|x64
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.forMAC|x86.ActiveCfg = forMAC|x86
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.forMAC|x86.Build.0 = forMAC|x86
 		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Release|x64.ActiveCfg = Release|x64
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Release|x64.Build.0 = Release|x64
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Release|x86.ActiveCfg = Release|x86
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Release|x86.Build.0 = Release|x86
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Web|Any CPU.ActiveCfg = Web|Any CPU
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Web|Any CPU.Build.0 = Web|Any CPU
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Web|Any CPU.Deploy.0 = Web|Any CPU
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Web|x64.ActiveCfg = Web|x64
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Web|x64.Build.0 = Web|x64
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Web|x86.ActiveCfg = Web|x86
+		{AB9FE85C-8D61-4724-908A-F90FE3E3BA53}.Web|x86.Build.0 = Web|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
