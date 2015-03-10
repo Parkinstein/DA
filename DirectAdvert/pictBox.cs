@@ -19,7 +19,7 @@ namespace DirectAdvert
 
         private void pictBox_Load(object sender, EventArgs e)
         {
-            pictureBox1.Image = teaser_edit.teapic;
+            pictureBox1.Image = teaser_edit.Teapic;
         }
     }
 }

@@ -77,7 +77,7 @@
             this.button3.TabIndex = 3;
             this.button3.Text = "Выбрать изображение";
             this.button3.UseVisualStyleBackColor = true;
-            //this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // textBox1
             // 
@@ -200,7 +200,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(261, 354);
+            this.ClientSize = new System.Drawing.Size(261, 359);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);

@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <PublishUrl>D:\Dropbox\MACrelease\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -39,6 +40,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -138,6 +140,23 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
+    <Reference Include="Infragistics4.Shared.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="Infragistics4.Win.DataVisualization.Shared.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="Infragistics4.Win.DataVisualization.UltraDataChart.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics4.Win.Misc.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics4.Win.Portable.Core.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="Infragistics4.Win.UltraWinChart.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics4.Win.UltraWinEditors.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics4.Win.UltraWinExplorerBar.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics4.Win.UltraWinGrid.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics4.Win.UltraWinSchedule.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics4.Win.UltraWinTabbedMdi.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics4.Win.UltraWinTabControl.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="Infragistics4.Win.UltraWinToolbars.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="Infragistics4.Win.v14.2, Version=14.2.20142.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="Itenso.TimePeriod">
+      <HintPath>..\packages\TimePeriodLibrary.NET.2.0.0\lib\net35\Desktop.Release\Itenso.TimePeriod.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <Private>True</Private>
@@ -145,6 +164,7 @@
     <Reference Include="Microsoft.TeamFoundation.Client, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.TeamFoundation.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.TeamFoundation.Diff, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualStudio.Services.Client, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.Services.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.Services.WebApi, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
@@ -157,6 +177,7 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Services" />
@@ -170,6 +191,13 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Telerik.WinControls, Version=2014.3.1202.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.WinControls.ChartView, Version=2014.3.1202.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.WinControls.GridView, Version=2014.3.1202.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.WinControls.UI, Version=2014.3.1202.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL" />
+    <Reference Include="TelerikCommon, Version=2014.3.1202.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="Xceed.Wpf.AvalonDock">
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
@@ -246,6 +274,7 @@
     <EmbeddedResource Include="pictBox.resx">
       <DependentUpon>pictBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -262,6 +291,10 @@
     <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\daForm.RootObject.GroupDetail.datasource" />
     <None Include="Properties\DataSources\daForm.RootObject.GroupDetail.Statistics.Current.datasource" />
+    <None Include="Properties\DataSources\daForm.RootObject.GroupTeaser.datasource" />
+    <None Include="Properties\DataSources\daForm.RootObject.TeaserInfo.datasource" />
+    <None Include="Properties\DataSources\daForm.RootObject.TeaserInfo.Statistics.Delta.datasource" />
+    <None Include="Properties\DataSources\Teaser_stat.RootObject.TeaserInfo.Statistics.Current.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -288,6 +321,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo_da.ico" />
+    <None Include="Resources\refresh_sm.png" />
+    <None Include="Resources\save_sm.png" />
+    <None Include="Resources\pencil_sm.png" />
+    <None Include="Resources\Search.png" />
     <None Include="Resources\Calendar.png" />
     <None Include="Resources\Power_Shut Down.png" />
     <None Include="Resources\Toolbar_Replay.png" />
@@ -345,25 +382,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="AxMicrosoft.Vbe.Interop.Forms">
-      <Guid>{0D452EE1-E08F-101A-852E-02608C4D0BB4}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>aximp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
     <COMReference Include="Microsoft.Vbe.Interop.Forms">
       <Guid>{0D452EE1-E08F-101A-852E-02608C4D0BB4}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="stdole">
-      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
       <VersionMajor>2</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>

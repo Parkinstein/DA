@@ -111,6 +111,24 @@ namespace DirectAdvert.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Картинки(*.jpg,*png)|*.jpg;*.png|Все файлы(*.*)|*.*.
+        /// </summary>
+        public static string dialogPictures {
+            get {
+                return ResourceManager.GetString("dialogPictures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Выбор картинки для тизера.
+        /// </summary>
+        public static string dialogPicturesTitle {
+            get {
+                return ResourceManager.GetString("dialogPicturesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap down {
@@ -241,6 +259,15 @@ namespace DirectAdvert.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Осталось .
+        /// </summary>
+        public static string Left {
+            get {
+                return ResourceManager.GetString("Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap loadinfo {
@@ -313,6 +340,16 @@ namespace DirectAdvert.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap pencil_sm {
+            get {
+                object obj = ResourceManager.GetObject("pencil_sm", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap play_blue {
             get {
                 object obj = ResourceManager.GetObject("play_blue", resourceCulture);
@@ -326,6 +363,16 @@ namespace DirectAdvert.Properties {
         public static System.Drawing.Bitmap Power_Shut_Down {
             get {
                 object obj = ResourceManager.GetObject("Power_Shut Down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap refresh_sm {
+            get {
+                object obj = ResourceManager.GetObject("refresh_sm", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -363,10 +410,39 @@ namespace DirectAdvert.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap save_sm {
+            get {
+                object obj = ResourceManager.GetObject("save_sm", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Search {
+            get {
+                object obj = ResourceManager.GetObject("Search", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap statistics {
             get {
                 object obj = ResourceManager.GetObject("statistics", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на  символов.
+        /// </summary>
+        public static string symbolsLeft {
+            get {
+                return ResourceManager.GetString("symbolsLeft", resourceCulture);
             }
         }
         

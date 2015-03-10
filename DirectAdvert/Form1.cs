@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using Newtonsoft.Json;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Security.AccessControl;
+using DirectAdvert.Properties;
 using Microsoft.Office.Interop.Excel;
+using Newtonsoft.Json;
+using Application = System.Windows.Forms.Application;
+using Point = System.Drawing.Point;
 
 namespace DirectAdvert
 {
@@ -26,63 +28,32 @@ namespace DirectAdvert
         }
         #region "Variables"
         public AutoCompleteStringCollection colValues = new AutoCompleteStringCollection();
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+        [SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr GetKeyboardLayout(int WindowsThreadProcessID);
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+        [SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern int GetWindowThreadProcessId(IntPtr handleWindow, out int lpdwProcessID);
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+        [SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr GetForegroundWindow();
         private static InputLanguageCollection _InstalledInputLanguages;
         public static List<Input> datalog;
         public List<string> logins, lAnnounces, lBase64pict, lcommands, lpictures, lPrice, lTitles, lUrl;
         private static int _ProcessId;
         private static string _CurrentInputLanguage;
-        static public string datenow,datePatt,login_string, password_string, tokenvalue, errorvalue, balance, email, currency, current_title, current_announce, current_url;
+        static public string datenow,datePatt,login_string, password_string, cururlimg,tokenvalue, errorvalue, balance, email, currency, current_title, current_announce, current_url;
         public string textend1, textend2, pathFile, imagestring_pre, fileData, balanseRounded, decrypted,  new_FolderName, filename, filepath, foldername, imagestring, textend;
         static public int errorcode, current_group, teaser_to_edit, selected_group;
         public static double allcounts, max_teasers_end, max_teasers,balance_c, current_price;
         public static byte[] imagebytes;
         public string[] teaser_titlles;
         static public bool accses;
-        public int folderid, folderid1, start_pos, zas, length_mass;
+        public int folderid, folderid1, start_pos, zas, length_mass,kolvo_strok,today_cliks,today_shows,yesterday_shows,yesterday_clicks;
         public static RootObject userdataT,userdataU, userdataV, userdataW, userdataX, userdataY, userdataZ;
         public static object datasrc;
         public bool flag_create_NF, groupstatus;
         public StringBuilder ads_array;
         public static DateTime Date_end;
-        //private bool _drawGradient = true;
-        //private Color _startColor = Color.Black;
-        //private Color _endColor = Color.FromArgb(255,175,0);
-        //private float _angle = 45;
-
-        //private bool _drawShadow = true;
-        //private float _yOffset = 1;
-        //private float _xOffset = 1;
-        //private Color _shadowColor = Color.Black;
-        //protected override void OnPaint(PaintEventArgs e)
-        //{
-        //    base.OnPaint(e);
-        //    e.Graphics.SmoothingMode =
-        //       System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
-        //    if (_drawGradient == true)
-        //    {
-        //        LinearGradientBrush brush = new LinearGradientBrush(new
-        //           System.Drawing.Rectangle(0, 0, this.Width, this.Height),
-        //           _startColor, _endColor, _angle, true);
-        //        e.Graphics.FillRectangle(brush, 0, 0,
-        //           this.Width, this.Height);
-        //    }
-
-        //    if (_drawShadow == true)
-        //        e.Graphics.DrawString(this.Text, this.Font,
-        //          new SolidBrush(_shadowColor), _xOffset,
-        //          _yOffset, StringFormat.GenericDefault);
-
-        //    e.Graphics.DrawString(this.Text, this.Font,
-        //          new SolidBrush(this.ForeColor), 0, 0,
-        //          StringFormat.GenericDefault);
-        //}
+        public double today_ctr, yesterday_ctr;
+        
         private const int CS_DROPSHADOW = 0x00020000;
         protected override CreateParams CreateParams
         {
@@ -211,7 +182,7 @@ namespace DirectAdvert
             start_pos = 17;
             tabControl1.Visible = false;
             flag_create_NF = false;
-            this.ClientSize = new System.Drawing.Size(307, 112);
+            ClientSize = new Size(307, 112);
             loginPage.Visible = true;
             loginButton.Enabled = false;
             pictureBox1.Visible = false;
@@ -219,17 +190,23 @@ namespace DirectAdvert
             Date_end = DateTime.Now;
             datenow = Date_end.Date.ToString(datePatt);
             Console.WriteLine(datenow);
-            label11.Visible = false;
-            eyepassbox.Image = DirectAdvert.Properties.Resources.eye;
+            eyepassbox.Image = Resources.eye;
             loginBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             loginBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            comboBox2.Items.Add(5);
+            comboBox2.Items.Add(10);
+            comboBox2.Items.Add(15);
+            comboBox2.Items.Add("Все");
+            comboBox2.SelectedIndex=1;
+            kolvo_strok = 10;
+
             #region "Проверка на сохраненные логины-пароли"
             pathFile = (@"common.dll");
             #region "Есть файл"
             if (File.Exists(pathFile))
             {
                 Console.WriteLine("File founded");
-                fileData = System.IO.File.ReadAllText(pathFile);
+                fileData = File.ReadAllText(pathFile);
                 if (fileData != "")
                 {
                     try
@@ -275,7 +252,7 @@ namespace DirectAdvert
         }
         private void forgotPasslink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.directadvert.ru/password_reminder");
+            Process.Start("http://www.directadvert.ru/password_reminder");
         }
         private void loginBox_TextChanged(object sender, EventArgs e)
         {
@@ -296,14 +273,14 @@ namespace DirectAdvert
                 int i = datalog.FindIndex(s => s.login_in == loginBox.Text);
                 Console.WriteLine(i);
                 string newitem;
-                if (i >= 0 && datalog.ElementAt(i).password_in.ToString() != "")
+                if (i >= 0 && datalog.ElementAt(i).password_in != "")
                 {
-                    newitem = datalog.ElementAt(i).password_in.ToString();
+                    newitem = datalog.ElementAt(i).password_in;
                     passwordBox.Text = newitem;
                     for (int x = 0; x > datalog.Count; x++)
                     {
-                        Console.WriteLine(datalog.ElementAt(x).login_in.ToString());
-                        Console.WriteLine(datalog.ElementAt(x).password_in.ToString());
+                        Console.WriteLine(datalog.ElementAt(x).login_in);
+                        Console.WriteLine(datalog.ElementAt(x).password_in);
                     }
                 }
                 else { passwordBox.Text = ""; Console.WriteLine("Совпадений не найдено"); }
@@ -327,7 +304,7 @@ namespace DirectAdvert
                     if (datalog.Exists(x => x.login_in == loginBox.Text && datalog.Exists(y => y.password_in != passwordBox.Text)))
                     {
                         alert frm = new alert();
-                        if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        if (frm.ShowDialog() == DialogResult.OK)
                         {
                             int a = datalog.FindIndex(s => s.login_in == loginBox.Text);
                             datalog.RemoveAt(a);
@@ -339,7 +316,7 @@ namespace DirectAdvert
 
                             querytoken();
                         }
-                        if (frm.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+                        if (frm.ShowDialog() == DialogResult.Cancel)
                         {
                             login_string = "";
                             password_string = "";
@@ -402,18 +379,18 @@ namespace DirectAdvert
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (GetKeyboardLayoutId() == "ENU")
-                flagBox.Image = DirectAdvert.Properties.Resources.reino_unido;
+                flagBox.Image = Resources.reino_unido;
             if (GetKeyboardLayoutId() == "RUS")
-                flagBox.Image = DirectAdvert.Properties.Resources.russia;
+                flagBox.Image = Resources.russia;
         }
         private void eyepassbox_MouseHover(object sender, EventArgs e)
         {
-            eyepassbox.Image = DirectAdvert.Properties.Resources.eye1;
+            eyepassbox.Image = Resources.eye1;
             passwordBox.UseSystemPasswordChar = false;
         }
         private void eyepassbox_MouseLeave(object sender, EventArgs e)
         {
-            eyepassbox.Image = DirectAdvert.Properties.Resources.eye;
+            eyepassbox.Image = Resources.eye;
             passwordBox.UseSystemPasswordChar = true;
         }
         private void loginBox_Leave(object sender, EventArgs e)
@@ -434,19 +411,19 @@ namespace DirectAdvert
             string reply = client.DownloadString(address);
             RootObject userdata = new RootObject();
             userdata = JsonConvert.DeserializeObject<RootObject>(reply);
-            if (userdata.success == true)
+            if (userdata.success)
             {
                 tokenvalue = userdata.token;
                 Console.WriteLine("отработала querytoken " + tokenvalue);
 
                 currency = userdata.account_data.currency;
-                if (currency == "RUR") { pictureBox1.Visible = true; pictureBox1.Image = DirectAdvert.Properties.Resources.russia; }
+                if (currency == "RUR") { pictureBox1.Visible = true; pictureBox1.Image = Resources.russia; }
                 label7.Text = userdata.account_data.email;
                 int i = userdata.account_data.balance.IndexOf(".");
                 string balanseRounded_pre = userdata.account_data.balance;
                 balanseRounded = balanseRounded_pre.Remove(i + 3);
                 label8.Text = balanseRounded;
-                this.ClientSize = new System.Drawing.Size(800, 600);
+                ClientSize = new Size(800, 600);
                 loginPage.Visible = false;
                 tabControl1.Visible = true;
                 queryfolders();
@@ -486,40 +463,48 @@ namespace DirectAdvert
                     }
                 }
                 queryteasers();
-                queryteaserstat();
+                //queryteaserstat();
             }
         }
         public void queryteasers()
         {
             this.Text = "Получаем тизеры...";
-            WebClient client = new WebClient();
+            //WebClient client = new WebClient();
             string address = ("https://api.directadvert.ru/get_group_teasers.json" + "?token=" + tokenvalue + "&group_id=" + folderid);
-            string reply = client.DownloadString(address);
+            //string reply = client.DownloadString(address);
+            WebClient wc = new WebClient();
+            wc.DownloadStringCompleted += new DownloadStringCompletedEventHandler(wc_DownloadStringCompleted);
+            wc.DownloadStringAsync(new Uri(address));
+            
+            this.Text = "Direct/Advert";
+        }
+        void wc_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            string reply = e.Result;
             userdataY = JsonConvert.DeserializeObject<RootObject>(reply);
             if (userdataY.success == true)
             {
                 Console.WriteLine("отработала queryteasers ");
-                dataGridView1.DataSource = userdataY.group_teasers;
-                label11.Visible = false;
-                dataGridView1.Visible = true;
-                dataGridView1.RowHeadersVisible = false;
-                dataGridView1.Columns[0].HeaderText = "ID объявления";
-                dataGridView1.Columns[1].HeaderText = "ID группы";
-                dataGridView1.Columns[2].HeaderText = "Статус";
-                dataGridView1.Columns[3].HeaderText = "Название тизера";
-                dataGridView1.Columns[4].HeaderText = "Текст";
-                dataGridView1.Columns[5].Visible = false;
-                dataGridView1.Columns[6].HeaderText = "URL";
-                dataGridView1.Columns[7].Visible = false; dataGridView1.Columns[8].Visible = false; dataGridView1.Columns[9].Visible = false;
-                dataGridView1.Columns[10].HeaderText = "Цена";
-                dataGridView1.Columns[11].Visible = false; dataGridView1.Columns[12].Visible = false; dataGridView1.Columns[13].Visible = false;
-                dataGridView1.AutoResizeColumns();
-                dataGridView1.AutoResizeRows();
-                dataGridView1.Columns[10].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                radGridView1.DataSource = userdataY.group_teasers;
+                radGridView1.Visible = true;
+                //radGridView1.RowHeadersVisible = false;
+                radGridView1.Columns[0].HeaderText = "ID объявления";
+                radGridView1.Columns[1].HeaderText = "ID группы";
+                radGridView1.Columns[2].HeaderText = "Статус";
+                radGridView1.Columns[3].HeaderText = "Название тизера";
+                radGridView1.Columns[4].HeaderText = "Текст";
+                radGridView1.Columns[5].IsVisible = false;
+                radGridView1.Columns[6].HeaderText = "URL";
+                radGridView1.Columns[7].IsVisible = false;
+                radGridView1.Columns[8].IsVisible = false;
+                radGridView1.Columns[9].IsVisible = false;
+                radGridView1.Columns[10].HeaderText = "Цена";
+                radGridView1.Columns[11].IsVisible = false;
+                radGridView1.Columns[12].IsVisible = false;
+                radGridView1.Columns[13].IsVisible = false;
             }
             else if (userdataY.error_code == 1016)
             {
-                label11.Visible = true;
                 pictureBox3.Image = null;
                 priceText.Text = "";
                 urlText.Text = "";
@@ -527,22 +512,26 @@ namespace DirectAdvert
                 teaserHead.Text = "";
                 teaserDescript.Text = "";
             }
-            this.Text = "Direct/Advert";
         }
         public void queryteaserstat()
         {
-            this.Text = "Получаем статистику...";
-            WebClient client = new WebClient();
-            string address = ("https://api.directadvert.ru/get_teaser_info.json" + "?token=" + tokenvalue + "&id=" + teaser_to_edit);
-            string reply = client.DownloadString(address);
-            userdataT = JsonConvert.DeserializeObject<RootObject>(reply);
-            label30.Text = (userdataT.teaser_info.statistics.current.shows).ToString();
-            label31.Text = (userdataT.teaser_info.statistics.current.clicks).ToString();
-            label32.Text = (userdataT.teaser_info.statistics.current.ctr).ToString();
-            label36.Text = (userdataT.teaser_info.statistics.delta.shows).ToString();
-            label35.Text = (userdataT.teaser_info.statistics.delta.clicks).ToString();
-            label34.Text = (userdataT.teaser_info.statistics.delta.ctr).ToString();
-            
+            if (userdataY.error_code != 1016)
+            {
+                this.Text = "Получаем статистику...";
+                WebClient client = new WebClient();
+                string address = ("https://api.directadvert.ru/get_teaser_info.json" + "?token=" + tokenvalue + "&id=" +
+                                  teaser_to_edit);
+                string reply = client.DownloadString(address);
+                userdataT = JsonConvert.DeserializeObject<RootObject>(reply);
+                label30.Text = (userdataT.teaser_info.statistics.current.shows).ToString();
+                label31.Text = (userdataT.teaser_info.statistics.current.clicks).ToString();
+                label32.Text = (userdataT.teaser_info.statistics.current.ctr).ToString();
+                label36.Text = (userdataT.teaser_info.statistics.delta.shows).ToString();
+                label35.Text = (userdataT.teaser_info.statistics.delta.clicks).ToString();
+                label34.Text = (userdataT.teaser_info.statistics.delta.ctr).ToString();
+
+            }
+
             this.Text = "Direct/Advert";
         }
         public void group_add()
@@ -624,17 +613,17 @@ namespace DirectAdvert
                 {
                     queryfolders();
                     label9.Refresh();
-                    dataGridView1.Refresh();
+                    radGridView1.Refresh();
                 }
             }
-            DirectAdvert.Properties.Settings.Default.group = folderList.SelectedIndex;
-            Properties.Settings.Default.Save();
+            Settings.Default.group = folderList.SelectedIndex;
+            Settings.Default.Save();
             
-            folderList.SelectedIndex = DirectAdvert.Properties.Settings.Default.group;
+            folderList.SelectedIndex = Settings.Default.group;
         }
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
+            Application.Exit();
         }
         private void folderList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -642,16 +631,16 @@ namespace DirectAdvert
             folderList.DisplayMember = "title";
             folderList.ValueMember = "group_id";
             folderid = Convert.ToInt32(folderList.SelectedValue);
-            DirectAdvert.Properties.Settings.Default.folderid = folderid;
-            Properties.Settings.Default.Save();
+            Settings.Default.folderid = folderid;
+            Settings.Default.Save();
             folderList.DisplayMember = "title";
             folderList.ValueMember = "status";
             if (folderList.SelectedValue != null)
             {
                 if (folderList.SelectedValue.ToString() == "paused")
-                { pictureBox2.Image = DirectAdvert.Properties.Resources.Toolbar_Pause; label18.Text = "Возобновить"; pictureBox4.Image = DirectAdvert.Properties.Resources.Toolbar_Pause; label12.Text = "Возобновить"; groupstatus = false; }
+                { pictureBox2.Image = Resources.Toolbar_Pause; label18.Text = "Возобновить"; pictureBox4.Image = Resources.Toolbar_Pause; label12.Text = "Возобновить"; groupstatus = false; }
                 if (folderList.SelectedValue.ToString() == "active")
-                { pictureBox2.Image = DirectAdvert.Properties.Resources.Toolbar_Play; label18.Text = "Остановить"; pictureBox4.Image = DirectAdvert.Properties.Resources.Toolbar_Play; label12.Text = "Остановить"; groupstatus = true; }
+                { pictureBox2.Image = Resources.Toolbar_Play; label18.Text = "Остановить"; pictureBox4.Image = Resources.Toolbar_Play; label12.Text = "Остановить"; groupstatus = true; }
             }
 
             queryteasers();
@@ -659,51 +648,36 @@ namespace DirectAdvert
         }
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            imagebytes = Convert.FromBase64String((string)dataGridView1.CurrentRow.Cells[8].Value);
-            MemoryStream ms = new MemoryStream(imagebytes, 0, imagebytes.Length);
-            ms.Write(imagebytes, 0, imagebytes.Length);
-            if(dataGridView1.CurrentRow.Cells[8].Value.ToString() != "")
-            pictureBox3.Image = Image.FromStream(ms, true);
-            teaserHead.Text = current_title = (string)dataGridView1.CurrentRow.Cells[3].Value;
-            teaserDescript.Text = current_announce = (string)dataGridView1.CurrentRow.Cells[4].Value;
-            priceText.Text  = ((double)dataGridView1.CurrentRow.Cells[10].Value).ToString();
-            current_price = (double)dataGridView1.CurrentRow.Cells[10].Value;
-            urlText.Text = current_url = (string)dataGridView1.CurrentRow.Cells[6].Value;
-            statusBox.Text = (string)dataGridView1.CurrentRow.Cells[2].Value;
-            current_group = folderid;
-            teaser_to_edit = (int)dataGridView1.CurrentRow.Cells[0].Value;
-            if (dataGridView1.SelectedRows.Count > 1)
-                button7.Enabled = false;
-            else 
-            { 
-                button7.Enabled = true;
-                WebClient client = new WebClient();
-                string address = ("https://api.directadvert.ru/get_teaser_info.json" + "?token=" + tokenvalue + "&id=" + teaser_to_edit);
-                string reply = client.DownloadString(address);
-                userdataT = JsonConvert.DeserializeObject<RootObject>(reply);
-                label30.Text = (userdataT.teaser_info.statistics.current.shows).ToString();
-                label31.Text = (userdataT.teaser_info.statistics.current.clicks).ToString();
-                label32.Text = (userdataT.teaser_info.statistics.current.ctr).ToString();
-                label36.Text = (userdataT.teaser_info.statistics.delta.shows).ToString();
-                label35.Text = (userdataT.teaser_info.statistics.delta.clicks).ToString();
-                label34.Text = (userdataT.teaser_info.statistics.delta.ctr).ToString();
-                //System.Windows.Forms.DataVisualization.Charting.Series today = chart1.Series["Yesterday"];
-                //System.Windows.Forms.DataVisualization.Charting.Series yesterday = chart1.Series["Today"];
-                //int y_shows_today = userdataT.teaser_info.statistics.current.shows;
-                //int y_click_today = userdataT.teaser_info.statistics.current.clicks;
-                //int y_ctr_today = Convert.ToInt32(userdataT.teaser_info.statistics.current.ctr);
-                //today.Points[0].SetValueY(y_shows_today);
-                //today.Points[1].SetValueY(y_click_today);
-                //today.Points[2].SetValueY(y_ctr_today);
-                //int y_shows_yesterday = userdataT.teaser_info.statistics.delta.shows;
-                //int y_click_yesterday = userdataT.teaser_info.statistics.delta.clicks;
-                //int y_ctr_yesterday = Convert.ToInt32(userdataT.teaser_info.statistics.delta.ctr);
-                //yesterday.Points[0].SetValueY(y_shows_yesterday);
-                //yesterday.Points[1].SetValueY(y_click_yesterday);
-                //yesterday.Points[2]
-                //yesterday.Points[2].SetValueY(y_ctr_yesterday);
+            //imagebytes = Convert.FromBase64String((string)dataGridView1.CurrentRow.Cells[8].Value);
+            //MemoryStream ms = new MemoryStream(imagebytes, 0, imagebytes.Length);
+            //ms.Write(imagebytes, 0, imagebytes.Length);
+            //if(dataGridView1.CurrentRow.Cells[8].Value.ToString() != "")
+            //pictureBox3.Image = Image.FromStream(ms, true);
+            //teaserHead.Text = current_title = (string)dataGridView1.CurrentRow.Cells[3].Value;
+            //teaserDescript.Text = current_announce = (string)dataGridView1.CurrentRow.Cells[4].Value;
+            //priceText.Text  = ((double)dataGridView1.CurrentRow.Cells[10].Value).ToString();
+            //current_price = (double)dataGridView1.CurrentRow.Cells[10].Value;
+            //urlText.Text = current_url = (string)dataGridView1.CurrentRow.Cells[6].Value;
+            //statusBox.Text = (string)dataGridView1.CurrentRow.Cells[2].Value;
+            //current_group = folderid;
+            //teaser_to_edit = (int)dataGridView1.CurrentRow.Cells[0].Value;
+            //if (dataGridView1.SelectedRows.Count > 1)
+            //    button7.Enabled = false;
+            //else 
+            //{ 
+            //    button7.Enabled = true;
+            //    WebClient client = new WebClient();
+            //    string address = ("https://api.directadvert.ru/get_teaser_info.json" + "?token=" + tokenvalue + "&id=" + teaser_to_edit);
+            //    string reply = client.DownloadString(address);
+            //    userdataT = JsonConvert.DeserializeObject<RootObject>(reply);
+            //    label30.Text = (userdataT.teaser_info.statistics.current.shows).ToString();
+            //    label31.Text = (userdataT.teaser_info.statistics.current.clicks).ToString();
+            //    label32.Text = (userdataT.teaser_info.statistics.current.ctr).ToString();
+            //    label36.Text = (userdataT.teaser_info.statistics.delta.shows).ToString();
+            //    label35.Text = (userdataT.teaser_info.statistics.delta.clicks).ToString();
+            //    label34.Text = (userdataT.teaser_info.statistics.delta.ctr).ToString();
 
-            }
+            //}
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -722,17 +696,17 @@ namespace DirectAdvert
         {
             if (flag_create_NF == true)
             {
-                if (start_pos >= 142) { timer_animation_panel.Stop(); button2.Image = DirectAdvert.Properties.Resources.up; }
+                if (start_pos >= 142) { timer_animation_panel.Stop(); button2.Image = Resources.up; }
                 else start_pos += 5;
-                panel3.Location = new System.Drawing.Point(163, start_pos);
-                panel5.Location = new System.Drawing.Point(163, start_pos);
+                panel3.Location = new Point(163, start_pos);
+                panel5.Location = new Point(163, start_pos);
             }
             else
             {
-                if (start_pos <= 17) { timer_animation_panel.Stop(); button2.Image = DirectAdvert.Properties.Resources.Folder_Add; }
+                if (start_pos <= 17) { timer_animation_panel.Stop(); button2.Image = Resources.Folder_Add; }
                 else start_pos -= 5;
-                panel3.Location = new System.Drawing.Point(163, start_pos);
-                panel5.Location = new System.Drawing.Point(163, start_pos);
+                panel3.Location = new Point(163, start_pos);
+                panel5.Location = new Point(163, start_pos);
             }
         }
         private void button3_Click(object sender, EventArgs e) //create new group
@@ -762,9 +736,9 @@ namespace DirectAdvert
 
         private void button6_Click(object sender, EventArgs e) //delete teasers
         {
-            if (dataGridView1.SelectedRows.Count > 0)
+            if (radGridView1.SelectedRows.Count > 0)
             {
-                var results = dataGridView1.SelectedRows.Cast<DataGridViewRow>().Select(x => Convert.ToString(x.Cells[0].Value));
+                var results = radGridView1.SelectedRows.Cast<DataGridViewRow>().Select(x => Convert.ToString(x.Cells[0].Value));
                 Console.WriteLine(results.Count().ToString());
                 ads_array = new StringBuilder();
                 foreach (string teaser in results)
@@ -785,8 +759,8 @@ namespace DirectAdvert
         }
         private void label18_Click(object sender, EventArgs e)
         {
-            DirectAdvert.Properties.Settings.Default.group = folderList.SelectedIndex;
-            Properties.Settings.Default.Save();
+            Settings.Default.group = folderList.SelectedIndex;
+            Settings.Default.Save();
             Console.WriteLine(folderid.ToString());
             if (groupstatus == false)
             {
@@ -796,16 +770,16 @@ namespace DirectAdvert
             {
                 group_pause();
             }
-            folderList.SelectedIndex = DirectAdvert.Properties.Settings.Default.group;
-            Console.WriteLine("{0}", DirectAdvert.Properties.Settings.Default.group);
+            folderList.SelectedIndex = Settings.Default.group;
+            Console.WriteLine("{0}", Settings.Default.group);
         }
         private void button8_Click(object sender, EventArgs e)
         {
             if (checkBox1.Checked == false)
-                System.Windows.Forms.Application.Exit();
+                Application.Exit();
             else if (checkBox1.Checked == true)
             {
-                this.ClientSize = new System.Drawing.Size(307, 112);
+                this.ClientSize = new Size(307, 112);
                 loginPage.Visible = true;
                 tabControl1.Visible = false;
             }
@@ -819,7 +793,7 @@ namespace DirectAdvert
         {
             if (tabControl1.SelectedIndex == 1) 
             { 
-                this.ClientSize = new System.Drawing.Size(368, 368);
+                this.ClientSize = new Size(368, 368);
                 button11.Enabled = false;
                 progressBar1.Visible = false;
                 button11.Enabled = false;
@@ -827,7 +801,7 @@ namespace DirectAdvert
                 comboBox1.DisplayMember = "title";
                 comboBox1.ValueMember = "group_id";
                 comboBox1.SelectedIndex = folderList.SelectedIndex;
-                folderid1 = DirectAdvert.Properties.Settings.Default.folderid;
+                folderid1 = Settings.Default.folderid;
                 string balanceRounded_format = balanseRounded.Replace(".", ",");
                 double balance_d = Double.Parse(balanceRounded_format);
                 label20.Text = "Баланс аккаунта - " + balanseRounded;
@@ -864,12 +838,12 @@ namespace DirectAdvert
                 label19.Text = "Вы можете загрузить еще " + max_teasers_end.ToString() + " тизер" + textend;
                 label19.Refresh();
             }
-            else if (tabControl1.SelectedIndex == 0) { this.ClientSize = new System.Drawing.Size(800, 600); dataGridView1.Refresh(); }
+            else if (tabControl1.SelectedIndex == 0) { this.ClientSize = new Size(800, 600); radGridView1.Refresh(); }
         }
         private void label12_Click(object sender, EventArgs e)
         {
-            DirectAdvert.Properties.Settings.Default.group = folderList.SelectedIndex;
-            Properties.Settings.Default.Save();
+            Settings.Default.group = folderList.SelectedIndex;
+            Settings.Default.Save();
             Console.WriteLine(folderid.ToString());
             if (groupstatus == false)
             {
@@ -879,8 +853,8 @@ namespace DirectAdvert
             {
                 group_pause();
             }
-            folderList.SelectedIndex = DirectAdvert.Properties.Settings.Default.group;
-            Console.WriteLine("{0}", DirectAdvert.Properties.Settings.Default.group);
+            folderList.SelectedIndex = Settings.Default.group;
+            Console.WriteLine("{0}", Settings.Default.group);
         }
         private void button4_Click(object sender, EventArgs e)
         {
@@ -906,9 +880,9 @@ namespace DirectAdvert
             if (comboBox1.SelectedValue != null)
             {
                 if (comboBox1.SelectedValue.ToString() == "paused")
-                { pictureBox2.Image = DirectAdvert.Properties.Resources.Toolbar_Pause; label18.Text = "Возобновить"; pictureBox4.Image = DirectAdvert.Properties.Resources.Toolbar_Pause; label12.Text = "Возобновить"; groupstatus = false; }
+                { pictureBox2.Image = Resources.Toolbar_Pause; label18.Text = "Возобновить"; pictureBox4.Image = Resources.Toolbar_Pause; label12.Text = "Возобновить"; groupstatus = false; }
                 if (comboBox1.SelectedValue.ToString() == "active")
-                { pictureBox2.Image = DirectAdvert.Properties.Resources.Toolbar_Play; label18.Text = "Остановить"; pictureBox4.Image = DirectAdvert.Properties.Resources.Toolbar_Play; label12.Text = "Остановить"; groupstatus = true; }
+                { pictureBox2.Image = Resources.Toolbar_Play; label18.Text = "Остановить"; pictureBox4.Image = Resources.Toolbar_Play; label12.Text = "Остановить"; groupstatus = true; }
             }
 
             queryteasers();
@@ -943,7 +917,7 @@ namespace DirectAdvert
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "Файлы DirectAdvert(*.xlsx)|*.xlsx|Файлы DirectAdvert(*.xls)|*.xls|Все файлы(*.*)|*.*";
             openFileDialog1.Title = "Выбор файла для заливки";
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 filename = openFileDialog1.FileName;
             }
@@ -969,19 +943,19 @@ namespace DirectAdvert
             }
             else return;
             Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
-            Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(filename, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
-            Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
-            ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
-            var lastCell = ObjWorkSheet.Cells.SpecialCells(Microsoft.Office.Interop.Excel.XlCellType.xlCellTypeLastCell);
+            Workbook ObjWorkBook = ObjExcel.Workbooks.Open(filename, 0, false, 5, "", "", false, XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+            Worksheet ObjWorkSheet;
+            ObjWorkSheet = (Worksheet)ObjWorkBook.Sheets[1];
+            var lastCell = ObjWorkSheet.Cells.SpecialCells(XlCellType.xlCellTypeLastCell);
             length_mass = lastCell.Row;
             Range titl = ObjWorkSheet.get_Range("A2", "A" + length_mass.ToString());
             Range anon = ObjWorkSheet.get_Range("B2", "B" + length_mass.ToString());
             Range url = ObjWorkSheet.get_Range("C2", "C" + length_mass.ToString());
             Range pr = ObjWorkSheet.get_Range("D2", "D" + length_mass.ToString());
-            System.Array titles = titl.get_Value(Microsoft.Office.Interop.Excel.XlRangeValueDataType.xlRangeValueDefault);
-            System.Array annons = anon.get_Value(Microsoft.Office.Interop.Excel.XlRangeValueDataType.xlRangeValueDefault);
-            System.Array urls = url.get_Value(Microsoft.Office.Interop.Excel.XlRangeValueDataType.xlRangeValueDefault);
-            System.Array price = pr.get_Value(Microsoft.Office.Interop.Excel.XlRangeValueDataType.xlRangeValueDefault);
+            Array titles = titl.get_Value(XlRangeValueDataType.xlRangeValueDefault);
+            Array annons = anon.get_Value(XlRangeValueDataType.xlRangeValueDefault);
+            Array urls = url.get_Value(XlRangeValueDataType.xlRangeValueDefault);
+            Array price = pr.get_Value(XlRangeValueDataType.xlRangeValueDefault);
             ObjWorkBook.Close(false, Type.Missing, Type.Missing);
             ObjExcel.Quit();
             GC.Collect();
@@ -1031,7 +1005,7 @@ namespace DirectAdvert
             if (teaser_titlles.Length > max_teasers_end)
             {
                 MessageBox.Show("В файле больше тизеров, чем Вы можете загрузить в аккаунт, попробуйте пополнить счет или уменьшить количество тизеров");
-                System.Diagnostics.Process.Start("http://directadvert.ru/payment");
+                Process.Start("http://directadvert.ru/payment");
                 Close();
             }
             StringBuilder command = new StringBuilder();
@@ -1121,13 +1095,13 @@ namespace DirectAdvert
                     Console.WriteLine(responce);
                     d++;
                     progressBar1.PerformStep();
-                DirectAdvert.Properties.Settings.Default.group = folderList.SelectedIndex;
-                Properties.Settings.Default.Save();
+                Settings.Default.group = folderList.SelectedIndex;
+                Settings.Default.Save();
                 }
 
             group_pause();
-            folderList.SelectedIndex = DirectAdvert.Properties.Settings.Default.group;
-            dataGridView1.Refresh();
+            folderList.SelectedIndex = Settings.Default.group;
+            radGridView1.Refresh();
             this.Text = "Direct/Advert";
      
                 
@@ -1141,22 +1115,7 @@ namespace DirectAdvert
         {
             button7_Click(sender, e);
         }
-        private void dataGridView1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-
-                dataGridView1.MultiSelect = false;
-                var h = dataGridView1.HitTest(e.X, e.Y);
-                if (h.Type == DataGridViewHitTestType.Cell)
-                {
-                    //LNK_id = dataGridView1.Rows[h.RowIndex].Cells["id_lnkcheck"].Value.ToString();
-                    dataGridView1.Rows[h.RowIndex].Selected = true;
-                }
-                
-            }
-            else if (e.Button == MouseButtons.Left) { dataGridView1.MultiSelect = true; }
-        }
+        
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -1175,44 +1134,105 @@ namespace DirectAdvert
 
         private void stat_Click(object sender, EventArgs e)
         {
+            Teaser_stat statteaser = new Teaser_stat();
+            statteaser.Show();
+            
+        }
 
+        public void radGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            if (userdataY != null)
+            {
+                if ((string)radGridView1.CurrentRow.Cells["image_string"].Value != null)
+                {
+                    imagebytes = Convert.FromBase64String((string)radGridView1.CurrentRow.Cells["image_string"].Value);
+                    MemoryStream ms = new MemoryStream(imagebytes, 0, imagebytes.Length);
+                    ms.Write(imagebytes, 0, imagebytes.Length);
+                    if (radGridView1.CurrentRow.Cells[8].Value.ToString() != "")
+                        pictureBox3.Image = Image.FromStream(ms, true);
+                }
+                else
+                {
+                }
+                teaserHead.Text = current_title = (string)radGridView1.CurrentRow.Cells["title"].Value;
+            }
+            teaserDescript.Text = current_announce = (string) radGridView1.CurrentRow.Cells["announce"].Value;
+            priceText.Text = ((double)radGridView1.CurrentRow.Cells["buy_price"].Value).ToString(CultureInfo.InvariantCulture);
+            current_price = (double)radGridView1.CurrentRow.Cells["buy_price"].Value;
+            urlText.Text = current_url = (string)radGridView1.CurrentRow.Cells["url"].Value;
+            statusBox.Text = (string) radGridView1.CurrentRow.Cells["status"].Value;
+            current_group = folderid;
+            teaser_to_edit = (int)radGridView1.CurrentRow.Cells["ad_id"].Value;
+            cururlimg = (string)radGridView1.CurrentRow.Cells["image_url"].Value;
+            if (radGridView1.SelectedRows.Count > 1)
+                button7.Enabled = false;
+            else
+            {
+            }
+            button7.Enabled = true;
+                WebClient client = new WebClient();
+                string address = ("https://api.directadvert.ru/get_teaser_info.json" + "?token=" + tokenvalue + "&id=" + teaser_to_edit);
+                string reply = client.DownloadString(address);
+                userdataT = JsonConvert.DeserializeObject<RootObject>(reply);
+                label30.Text = (userdataT.teaser_info.statistics.current.shows).ToString();
+                label31.Text = (userdataT.teaser_info.statistics.current.clicks).ToString();
+                label32.Text = (userdataT.teaser_info.statistics.current.ctr).ToString(CultureInfo.InvariantCulture);
+                label36.Text = ((userdataT.teaser_info.statistics.current.shows)-(userdataT.teaser_info.statistics.delta.shows)).ToString();
+                label35.Text = ((userdataT.teaser_info.statistics.current.clicks)-(userdataT.teaser_info.statistics.delta.clicks)).ToString();
+                label34.Text = ((userdataT.teaser_info.statistics.current.ctr)-(userdataT.teaser_info.statistics.delta.ctr)).ToString(CultureInfo.InvariantCulture);
+                today_shows = userdataT.teaser_info.statistics.current.shows;
+                today_cliks = userdataT.teaser_info.statistics.current.clicks;
+                today_ctr = userdataT.teaser_info.statistics.current.ctr;
+                yesterday_shows = (userdataT.teaser_info.statistics.current.shows) - (userdataT.teaser_info.statistics.delta.shows);
+            yesterday_clicks = (userdataT.teaser_info.statistics.current.clicks) -
+                               (userdataT.teaser_info.statistics.delta.clicks);
+            yesterday_ctr = (userdataT.teaser_info.statistics.current.ctr) -
+                            (userdataT.teaser_info.statistics.delta.ctr);
+            radProgressBar1.Maximum = today_shows + yesterday_shows;
+            radProgressBar1.Value1 = today_shows;
+            radProgressBar2.Maximum = today_cliks + yesterday_clicks;
+            radProgressBar2.Value1 = today_cliks;
+            radProgressBar3.Maximum = Convert.ToInt32((today_ctr*100)+(yesterday_ctr*100));
+            radProgressBar3.Value1 = Convert.ToInt32(today_ctr*100);
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void comboBox2_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            switch (comboBox2.SelectedIndex)
+            {
+                case 0:
+                    radGridView1.EnablePaging = true;
+                    kolvo_strok = 5;
+                    radGridView1.PageSize = kolvo_strok;
+                    radGridView1.Refresh();
+                    break;
+                case 1:
+                    radGridView1.EnablePaging = true;
+                    kolvo_strok = 10;
+                    radGridView1.PageSize = kolvo_strok;
+                    radGridView1.Refresh();
+                    break;
+                case 2:
+                    radGridView1.EnablePaging = true;
+                    kolvo_strok = 15;
+                    radGridView1.PageSize = kolvo_strok;
+                    radGridView1.Refresh();
+                    break;
+                case 3:
+                    radGridView1.EnablePaging = false;
+                    radGridView1.PageSize = kolvo_strok;
+                    radGridView1.Refresh();
+                    break;
+            }
         }
 
 
 
-        //private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        //{
-        //    DataGridViewColumn newColumn = dataGridView1.Columns[e.ColumnIndex];
-        //    DataGridViewColumn oldColumn = dataGridView1.SortedColumn;
-        //    ListSortDirection direction;
-
-        //    // If oldColumn is null, then the DataGridView is not sorted. 
-        //    if (oldColumn != null)
-        //    {
-        //        // Sort the same column again, reversing the SortOrder. 
-        //        if (oldColumn == newColumn &&
-        //            dataGridView1.SortOrder == SortOrder.Ascending)
-        //        {
-        //            direction = ListSortDirection.Descending;
-        //        }
-        //        else
-        //        {
-        //            // Sort a new column and remove the old SortGlyph.
-        //            direction = ListSortDirection.Ascending;
-        //            oldColumn.HeaderCell.SortGlyphDirection = SortOrder.None;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        direction = ListSortDirection.Ascending;
-        //    }
-
-        //    // Sort the selected column.
-        //    dataGridView1.Sort(newColumn, direction);
-        //    newColumn.HeaderCell.SortGlyphDirection =
-        //        direction == ListSortDirection.Ascending ?
-        //        SortOrder.Ascending : SortOrder.Descending;
-        //}
+    }
 
     }
-}
