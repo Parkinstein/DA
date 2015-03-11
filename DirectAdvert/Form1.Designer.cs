@@ -40,6 +40,12 @@
             this.edit = new System.Windows.Forms.ToolStripMenuItem();
             this.delete = new System.Windows.Forms.ToolStripMenuItem();
             this.stat = new System.Windows.Forms.ToolStripMenuItem();
+            this.button16 = new System.Windows.Forms.Button();
+            this.button15 = new System.Windows.Forms.Button();
+            this.button14 = new System.Windows.Forms.Button();
+            this.label42 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.radSplitContainer1 = new Telerik.WinControls.UI.RadSplitContainer();
             this.splitPanel1 = new Telerik.WinControls.UI.SplitPanel();
             this.radProgressBar3 = new Telerik.WinControls.UI.RadProgressBar();
@@ -72,12 +78,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.urlText = new System.Windows.Forms.Label();
             this.splitPanel2 = new Telerik.WinControls.UI.SplitPanel();
-            this.button16 = new System.Windows.Forms.Button();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button14 = new System.Windows.Forms.Button();
-            this.label42 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.button13 = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -127,6 +127,9 @@
             this.button5 = new System.Windows.Forms.Button();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.loginPage = new System.Windows.Forms.Panel();
+            this.radRadioButton3 = new Telerik.WinControls.UI.RadRadioButton();
+            this.radRadioButton2 = new Telerik.WinControls.UI.RadRadioButton();
+            this.radRadioButton1 = new Telerik.WinControls.UI.RadRadioButton();
             this.flagBox = new System.Windows.Forms.PictureBox();
             this.eyepassbox = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -163,6 +166,9 @@
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.loginPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.radRadioButton3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radRadioButton2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radRadioButton1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flagBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eyepassbox)).BeginInit();
             this.SuspendLayout();
@@ -292,6 +298,63 @@
             this.stat.Size = new System.Drawing.Size(154, 22);
             this.stat.Text = "Статистика";
             this.stat.Click += new System.EventHandler(this.stat_Click);
+            // 
+            // button16
+            // 
+            this.button16.Image = global::DirectAdvert.Properties.Resources.refresh_sm;
+            this.button16.Location = new System.Drawing.Point(299, 1);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(25, 23);
+            this.button16.TabIndex = 86;
+            this.toolTip1.SetToolTip(this.button16, "Отменить изменения");
+            this.button16.UseVisualStyleBackColor = true;
+            // 
+            // button15
+            // 
+            this.button15.Image = global::DirectAdvert.Properties.Resources.save_sm;
+            this.button15.Location = new System.Drawing.Point(267, 1);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(25, 23);
+            this.button15.TabIndex = 85;
+            this.toolTip1.SetToolTip(this.button15, "Сохранить изменения");
+            this.button15.UseVisualStyleBackColor = true;
+            // 
+            // button14
+            // 
+            this.button14.Image = global::DirectAdvert.Properties.Resources.pencil_sm;
+            this.button14.Location = new System.Drawing.Point(235, 1);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(25, 23);
+            this.button14.TabIndex = 84;
+            this.toolTip1.SetToolTip(this.button14, "Режим редактирования");
+            this.button14.UseVisualStyleBackColor = true;
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(136, 6);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(50, 13);
+            this.label42.TabIndex = 83;
+            this.label42.Text = "тизеров";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(4, 6);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(76, 13);
+            this.label11.TabIndex = 82;
+            this.label11.Text = "Выводить по";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(83, 2);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(50, 21);
+            this.comboBox2.TabIndex = 81;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged_1);
             // 
             // radSplitContainer1
             // 
@@ -698,63 +761,6 @@
             this.splitPanel2.TabStop = false;
             this.splitPanel2.Text = "splitPanel2";
             this.splitPanel2.ThemeName = "ControlDefault";
-            // 
-            // button16
-            // 
-            this.button16.Image = global::DirectAdvert.Properties.Resources.refresh_sm;
-            this.button16.Location = new System.Drawing.Point(299, 1);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(25, 23);
-            this.button16.TabIndex = 86;
-            this.toolTip1.SetToolTip(this.button16, "Отменить изменения");
-            this.button16.UseVisualStyleBackColor = true;
-            // 
-            // button15
-            // 
-            this.button15.Image = global::DirectAdvert.Properties.Resources.save_sm;
-            this.button15.Location = new System.Drawing.Point(267, 1);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(25, 23);
-            this.button15.TabIndex = 85;
-            this.toolTip1.SetToolTip(this.button15, "Сохранить изменения");
-            this.button15.UseVisualStyleBackColor = true;
-            // 
-            // button14
-            // 
-            this.button14.Image = global::DirectAdvert.Properties.Resources.pencil_sm;
-            this.button14.Location = new System.Drawing.Point(235, 1);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(25, 23);
-            this.button14.TabIndex = 84;
-            this.toolTip1.SetToolTip(this.button14, "Режим редактирования");
-            this.button14.UseVisualStyleBackColor = true;
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(136, 6);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(50, 13);
-            this.label42.TabIndex = 83;
-            this.label42.Text = "тизеров";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(4, 6);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(76, 13);
-            this.label11.TabIndex = 82;
-            this.label11.Text = "Выводить по";
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(83, 2);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(50, 21);
-            this.comboBox2.TabIndex = 81;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged_1);
             // 
             // button13
             // 
@@ -1295,6 +1301,9 @@
             // 
             // loginPage
             // 
+            this.loginPage.Controls.Add(this.radRadioButton3);
+            this.loginPage.Controls.Add(this.radRadioButton2);
+            this.loginPage.Controls.Add(this.radRadioButton1);
             this.loginPage.Controls.Add(this.flagBox);
             this.loginPage.Controls.Add(this.eyepassbox);
             this.loginPage.Controls.Add(this.label2);
@@ -1310,9 +1319,39 @@
             this.loginPage.Size = new System.Drawing.Size(778, 600);
             this.loginPage.TabIndex = 1;
             // 
+            // radRadioButton3
+            // 
+            this.radRadioButton3.Enabled = false;
+            this.radRadioButton3.Location = new System.Drawing.Point(254, 10);
+            this.radRadioButton3.Name = "radRadioButton3";
+            this.radRadioButton3.Size = new System.Drawing.Size(49, 18);
+            this.radRadioButton3.TabIndex = 15;
+            this.radRadioButton3.TabStop = false;
+            this.radRadioButton3.Text = "Агент";
+            // 
+            // radRadioButton2
+            // 
+            this.radRadioButton2.Enabled = false;
+            this.radRadioButton2.Location = new System.Drawing.Point(147, 10);
+            this.radRadioButton2.Name = "radRadioButton2";
+            this.radRadioButton2.Size = new System.Drawing.Size(64, 18);
+            this.radRadioButton2.TabIndex = 14;
+            this.radRadioButton2.TabStop = false;
+            this.radRadioButton2.Text = "Партнер";
+            // 
+            // radRadioButton1
+            // 
+            this.radRadioButton1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.radRadioButton1.Location = new System.Drawing.Point(5, 10);
+            this.radRadioButton1.Name = "radRadioButton1";
+            this.radRadioButton1.Size = new System.Drawing.Size(99, 18);
+            this.radRadioButton1.TabIndex = 13;
+            this.radRadioButton1.Text = "Рекламодатель";
+            this.radRadioButton1.ToggleState = Telerik.WinControls.Enumerations.ToggleState.On;
+            // 
             // flagBox
             // 
-            this.flagBox.Location = new System.Drawing.Point(135, 69);
+            this.flagBox.Location = new System.Drawing.Point(135, 93);
             this.flagBox.Name = "flagBox";
             this.flagBox.Size = new System.Drawing.Size(30, 30);
             this.flagBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1322,7 +1361,7 @@
             // eyepassbox
             // 
             this.eyepassbox.Image = global::DirectAdvert.Properties.Resources.eye;
-            this.eyepassbox.Location = new System.Drawing.Point(146, 40);
+            this.eyepassbox.Location = new System.Drawing.Point(146, 64);
             this.eyepassbox.Name = "eyepassbox";
             this.eyepassbox.Size = new System.Drawing.Size(18, 18);
             this.eyepassbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1334,7 +1373,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 69);
+            this.label2.Location = new System.Drawing.Point(5, 93);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(118, 13);
             this.label2.TabIndex = 10;
@@ -1343,7 +1382,7 @@
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(180, 38);
+            this.cancelButton.Location = new System.Drawing.Point(180, 62);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(123, 20);
             this.cancelButton.TabIndex = 3;
@@ -1354,7 +1393,7 @@
             // savePasswordchkbx
             // 
             this.savePasswordchkbx.AutoSize = true;
-            this.savePasswordchkbx.Location = new System.Drawing.Point(180, 69);
+            this.savePasswordchkbx.Location = new System.Drawing.Point(180, 93);
             this.savePasswordchkbx.Name = "savePasswordchkbx";
             this.savePasswordchkbx.Size = new System.Drawing.Size(123, 30);
             this.savePasswordchkbx.TabIndex = 5;
@@ -1363,7 +1402,7 @@
             // 
             // loginButton
             // 
-            this.loginButton.Location = new System.Drawing.Point(180, 12);
+            this.loginButton.Location = new System.Drawing.Point(180, 36);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(123, 20);
             this.loginButton.TabIndex = 2;
@@ -1374,7 +1413,7 @@
             // forgotPasslink
             // 
             this.forgotPasslink.AutoSize = true;
-            this.forgotPasslink.Location = new System.Drawing.Point(5, 86);
+            this.forgotPasslink.Location = new System.Drawing.Point(5, 110);
             this.forgotPasslink.Name = "forgotPasslink";
             this.forgotPasslink.Size = new System.Drawing.Size(91, 13);
             this.forgotPasslink.TabIndex = 4;
@@ -1385,7 +1424,7 @@
             // passwordBox
             // 
             this.passwordBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.passwordBox.Location = new System.Drawing.Point(5, 39);
+            this.passwordBox.Location = new System.Drawing.Point(5, 63);
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.Size = new System.Drawing.Size(160, 20);
             this.passwordBox.TabIndex = 1;
@@ -1400,7 +1439,7 @@
             this.loginBox.CausesValidation = false;
             this.loginBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.loginBox.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.loginBox.Location = new System.Drawing.Point(5, 12);
+            this.loginBox.Location = new System.Drawing.Point(5, 36);
             this.loginBox.Name = "loginBox";
             this.loginBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.loginBox.Size = new System.Drawing.Size(160, 20);
@@ -1465,6 +1504,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.loginPage.ResumeLayout(false);
             this.loginPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.radRadioButton3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radRadioButton2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radRadioButton1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flagBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eyepassbox)).EndInit();
             this.ResumeLayout(false);
@@ -1540,7 +1582,6 @@
         public System.Windows.Forms.ToolStripMenuItem edit;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button13;
-        private Telerik.WinControls.UI.RadGridView radGridView1;
         private Telerik.WinControls.UI.RadSplitContainer radSplitContainer1;
         private Telerik.WinControls.UI.SplitPanel splitPanel1;
         private System.Windows.Forms.Label label41;
@@ -1579,6 +1620,10 @@
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox comboBox2;
+        private Telerik.WinControls.UI.RadRadioButton radRadioButton3;
+        private Telerik.WinControls.UI.RadRadioButton radRadioButton2;
+        private Telerik.WinControls.UI.RadRadioButton radRadioButton1;
+        public  Telerik.WinControls.UI.RadGridView radGridView1;
 
     }
 }

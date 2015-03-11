@@ -25,6 +25,8 @@ namespace DirectAdvert
         public daForm()
         {
             InitializeComponent();
+            if(teaser_edit.edit_closing)
+            { queryteasers();}
         }
         #region "Variables"
         public AutoCompleteStringCollection colValues = new AutoCompleteStringCollection();
@@ -46,7 +48,7 @@ namespace DirectAdvert
         public static byte[] imagebytes;
         public string[] teaser_titlles;
         static public bool accses;
-        public int folderid, folderid1, start_pos, zas, length_mass,kolvo_strok,today_cliks,today_shows,yesterday_shows,yesterday_clicks;
+        public int folderid, folderid1, start_pos, selected_row, length_mass,kolvo_strok,today_cliks,today_shows,yesterday_shows,yesterday_clicks;
         public static RootObject userdataT,userdataU, userdataV, userdataW, userdataX, userdataY, userdataZ;
         public static object datasrc;
         public bool flag_create_NF, groupstatus;
@@ -182,14 +184,13 @@ namespace DirectAdvert
             start_pos = 17;
             tabControl1.Visible = false;
             flag_create_NF = false;
-            ClientSize = new Size(307, 112);
+            ClientSize = new Size(307, 132);
             loginPage.Visible = true;
             loginButton.Enabled = false;
             pictureBox1.Visible = false;
             datePatt = @"yyyy-MM-dd";
             Date_end = DateTime.Now;
             datenow = Date_end.Date.ToString(datePatt);
-            Console.WriteLine(datenow);
             eyepassbox.Image = Resources.eye;
             loginBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             loginBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -468,7 +469,7 @@ namespace DirectAdvert
         }
         public void queryteasers()
         {
-            this.Text = "Получаем тизеры...";
+            Text = "Получаем тизеры...";
             //WebClient client = new WebClient();
             string address = ("https://api.directadvert.ru/get_group_teasers.json" + "?token=" + tokenvalue + "&group_id=" + folderid);
             //string reply = client.DownloadString(address);
@@ -476,7 +477,7 @@ namespace DirectAdvert
             wc.DownloadStringCompleted += new DownloadStringCompletedEventHandler(wc_DownloadStringCompleted);
             wc.DownloadStringAsync(new Uri(address));
             
-            this.Text = "Direct/Advert";
+            Text = "Direct/Advert";
         }
         void wc_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
@@ -487,7 +488,6 @@ namespace DirectAdvert
                 Console.WriteLine("отработала queryteasers ");
                 radGridView1.DataSource = userdataY.group_teasers;
                 radGridView1.Visible = true;
-                //radGridView1.RowHeadersVisible = false;
                 radGridView1.Columns[0].HeaderText = "ID объявления";
                 radGridView1.Columns[1].HeaderText = "ID группы";
                 radGridView1.Columns[2].HeaderText = "Статус";
@@ -513,27 +513,7 @@ namespace DirectAdvert
                 teaserDescript.Text = "";
             }
         }
-        public void queryteaserstat()
-        {
-            if (userdataY.error_code != 1016)
-            {
-                this.Text = "Получаем статистику...";
-                WebClient client = new WebClient();
-                string address = ("https://api.directadvert.ru/get_teaser_info.json" + "?token=" + tokenvalue + "&id=" +
-                                  teaser_to_edit);
-                string reply = client.DownloadString(address);
-                userdataT = JsonConvert.DeserializeObject<RootObject>(reply);
-                label30.Text = (userdataT.teaser_info.statistics.current.shows).ToString();
-                label31.Text = (userdataT.teaser_info.statistics.current.clicks).ToString();
-                label32.Text = (userdataT.teaser_info.statistics.current.ctr).ToString();
-                label36.Text = (userdataT.teaser_info.statistics.delta.shows).ToString();
-                label35.Text = (userdataT.teaser_info.statistics.delta.clicks).ToString();
-                label34.Text = (userdataT.teaser_info.statistics.delta.ctr).ToString();
 
-            }
-
-            this.Text = "Direct/Advert";
-        }
         public void group_add()
         {
             WebClient client = new WebClient();
@@ -771,7 +751,6 @@ namespace DirectAdvert
                 group_pause();
             }
             folderList.SelectedIndex = Settings.Default.group;
-            Console.WriteLine("{0}", Settings.Default.group);
         }
         private void button8_Click(object sender, EventArgs e)
         {
@@ -779,21 +758,17 @@ namespace DirectAdvert
                 Application.Exit();
             else if (checkBox1.Checked == true)
             {
-                this.ClientSize = new Size(307, 112);
+                ClientSize = new Size(307, 132);
                 loginPage.Visible = true;
                 tabControl1.Visible = false;
             }
         }
-        private void signcount_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //CalculateTotalPages();
-            //Console.WriteLine(TotalPage.ToString());
-        }
+
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedIndex == 1) 
             { 
-                this.ClientSize = new Size(368, 368);
+                ClientSize = new Size(368, 368);
                 button11.Enabled = false;
                 progressBar1.Visible = false;
                 button11.Enabled = false;
@@ -835,7 +810,7 @@ namespace DirectAdvert
 
                 label15.Text = "В аккаунте " + allcounts + " тизер" + textend1;
                 label15.Refresh();
-                label19.Text = "Вы можете загрузить еще " + max_teasers_end.ToString() + " тизер" + textend;
+                label19.Text = "Вы можете загрузить еще " + max_teasers_end + " тизер" + textend;
                 label19.Refresh();
             }
             else if (tabControl1.SelectedIndex == 0) { this.ClientSize = new Size(800, 600); radGridView1.Refresh(); }
@@ -975,7 +950,6 @@ namespace DirectAdvert
                 lPrice.Add(prices[i]);
             }
             foreach (string pri in lPrice)
-                Console.WriteLine(pri.ToString());
             lpictures.Sort();
             List<string> lPict_sort = new List<string>();
             lPict_sort = (lpictures.Take(teaser_titlles.Length).ToList());
@@ -1080,7 +1054,7 @@ namespace DirectAdvert
             progressBar1.Step = 1;
             progressBar1.Value = 0;
             int d = 0;
-            this.Text = "Идет отправка данных...";
+            Text = Resources.sendDate;
             foreach (var com in lcommands)
             {
                     WebClient wc = new WebClient();
@@ -1109,29 +1083,17 @@ namespace DirectAdvert
         private void button7_Click(object sender, EventArgs e) // edit teaser
         {
             teaser_edit teasedit = new teaser_edit();
+            selected_row = radGridView1.CurrentRow.Index;
             teasedit.Show();
         }
-        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            button7_Click(sender, e);
-        }
-        
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void edit_Click(object sender, EventArgs e)
         {
             button7_Click(sender, e);
         }
-
         private void delete_Click(object sender, EventArgs e)
         {
             button6_Click(sender, e);
         }
-
         private void stat_Click(object sender, EventArgs e)
         {
             Teaser_stat statteaser = new Teaser_stat();
@@ -1196,10 +1158,7 @@ namespace DirectAdvert
             radProgressBar3.Value1 = Convert.ToInt32(today_ctr*100);
         }
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
+ 
 
         private void comboBox2_SelectedIndexChanged_1(object sender, EventArgs e)
         {
@@ -1231,8 +1190,8 @@ namespace DirectAdvert
             }
         }
 
-
-
-    }
+      }
 
     }
+
+    

@@ -428,6 +428,15 @@ namespace DirectAdvert.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Идет отправка данных....
+        /// </summary>
+        public static string sendDate {
+            get {
+                return ResourceManager.GetString("sendDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap statistics {

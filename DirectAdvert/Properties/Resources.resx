@@ -253,4 +253,7 @@
   <data name="symbolsLeft" xml:space="preserve">
     <value> символов</value>
   </data>
+  <data name="sendDate" xml:space="preserve">
+    <value>Идет отправка данных...</value>
+  </data>
 </root>
